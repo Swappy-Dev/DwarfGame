@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movementInput;
 
+    // The timer that controls how long we are stunned
+    public float knockbackTimer = 0f;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -18,8 +20,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 movement = movementInput.normalized * moveSpeed * Time.fixedDeltaTime;
+       
+        if (knockbackTimer > 0)
+        {
+            
+            knockbackTimer -= Time.fixedDeltaTime;
 
+            // Exit immediately! Do NOT run the walking code below.
+            return;
+        }
+
+        
+        Vector2 movement = movementInput.normalized * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
     }
 
@@ -27,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveActionReference.action.Enable();
         moveActionReference.action.performed += OnMovedPerformed;
-        moveActionReference.action.canceled += OnMoveCanceled;  
+        moveActionReference.action.canceled += OnMoveCanceled;
     }
 
     void OnDisable()
@@ -36,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         moveActionReference.action.canceled -= OnMoveCanceled;
         moveActionReference.action.Disable();
     }
-   
+
     private void OnMovedPerformed(InputAction.CallbackContext context)
     {
         movementInput = context.ReadValue<Vector2>();
@@ -46,7 +58,4 @@ public class PlayerMovement : MonoBehaviour
     {
         movementInput = Vector2.zero;
     }
-
- 
-
 }

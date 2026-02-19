@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 983276373}
   - component: {fileID: 983276376}
   - component: {fileID: 983276377}
+  - component: {fileID: 983276378}
   m_Layer: 0
   m_Name: Mole_Miner
   m_TagString: Untagged
@@ -322,7 +323,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.767, y: -1.223, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -384,7 +385,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -400,6 +401,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.5593984, y: 3.0600545}
   m_EdgeRadius: 0
+--- !u!114 &983276378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983276372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 763cb3814287c744fa7925e8c3dad42f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  knockbackForce: 4
+  enemyDamageAmount: 10
 --- !u!1 &1563114531
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,9 +428,10 @@ GameObject:
   - component: {fileID: 1563114535}
   - component: {fileID: 1563114536}
   - component: {fileID: 1563114537}
+  - component: {fileID: 1563114538}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -536,6 +552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   moveSpeed: 8
   moveActionReference: {fileID: -8852584894438894313, guid: a30dab0a4ab1a3f49a1e7a5eb7fdfab6, type: 3}
+  knockbackTimer: 0
 --- !u!61 &1563114537
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -582,6 +599,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &1563114538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563114531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0bf1f283ac37614ca1f5d6179670f98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
