@@ -9,8 +9,7 @@ public class MoleAI : MonoBehaviour
     public float moveSpeed = 3f;
     public float visionRange = 10f;
     public LayerMask obstacleLayer;
-    public float wallAvoidanceDistance = 1.5f; // NEW: How close to a wall before he tries to turn
-
+    public float wallAvoidanceDistance = 1.5f; 
     [Header("Combat")]
     public GameObject pickaxePrefab;
     public float throwDistance = 6f;
@@ -72,19 +71,19 @@ public class MoleAI : MonoBehaviour
         }
         else
         {
-            // --- NEW: Wall Avoidance Logic ---
+           
             Vector2 finalMoveDirection = directionToPlayer;
 
-            // 2. The Short Laser: Is there a wall right in front of our nose?
+           
             RaycastHit2D wallInFace = Physics2D.Raycast(transform.position, directionToPlayer, wallAvoidanceDistance, obstacleLayer);
 
             if (wallInFace.collider != null)
             {
-                // We hit a wall! Calculate the direction to slide ALONG the wall.
+                
                 Vector2 wallNormal = wallInFace.normal;
                 Vector2 slideDirection = new Vector2(-wallNormal.y, wallNormal.x);
 
-                // Make sure we are sliding the direction that gets us closer to the player, not further away
+                
                 if (Vector2.Dot(slideDirection, directionToPlayer) < 0)
                 {
                     slideDirection = -slideDirection;

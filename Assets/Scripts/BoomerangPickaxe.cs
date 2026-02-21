@@ -55,7 +55,7 @@ public class BoomerangPickaxe : MonoBehaviour
             isReturning = true;
         }
 
-        // --- NEW: Bounce off walls ---
+        
         if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacles"))
         {
             isReturning = true;
