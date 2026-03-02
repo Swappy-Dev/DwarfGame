@@ -2564,7 +2564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382d23bcf861bc94bb85bf7807859ce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoleAI
-  moveSpeed: 3
+  moveSpeed: 2
   visionRange: 20
   obstacleLayer:
     serializedVersion: 2
