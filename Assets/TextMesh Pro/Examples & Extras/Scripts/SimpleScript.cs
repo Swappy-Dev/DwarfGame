@@ -5,7 +5,7 @@ using System.Collections;
 namespace TMPro.Examples
 {
 
-    public class SimpleScript : MonoBehaviour
+    public class HealthHeart : MonoBehaviour
     {
 
         private TextMeshPro m_textMeshPro;
