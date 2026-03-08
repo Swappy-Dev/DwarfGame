@@ -3,12 +3,14 @@ using UnityEngine;
 public class BoomerangPickaxe : MonoBehaviour
 {
     public float speed = 12f;
-    public int damage = 10;
+    public int damage = 1;
 
     private Transform mole;
     private MoleAI moleAI;
     private Vector2 targetPosition;
     private bool isReturning = false;
+
+    private bool hasHitPlayer = false;
 
     public void Throw(Transform thrower, Vector2 targetPos)
     {
@@ -45,8 +47,10 @@ public class BoomerangPickaxe : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("Player") && !hasHitPlayer)
         {
+            hasHitPlayer = true;
+
             PlayerData playerStats = collider.GetComponent<PlayerData>();
             if (playerStats != null)
             {

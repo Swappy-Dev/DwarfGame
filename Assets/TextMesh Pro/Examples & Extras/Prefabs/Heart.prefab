@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8398848178782682443}
   - component: {fileID: 8670991542371699059}
   - component: {fileID: 7848559036606049135}
-  - component: {fileID: 7742456476395194344}
+  - component: {fileID: 5279959392652344865}
   m_Layer: 5
   m_Name: Heart
   m_TagString: Untagged
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &7742456476395194344
+--- !u!114 &5279959392652344865
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,9 +106,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3439642949941262198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eff140b25d64601aabc6ba32245d099, type: 3}
+  m_Script: {fileID: 11500000, guid: 62700e8b219be0242b85f9e133bd8daa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TMPro.Examples.SimpleScript
+  m_EditorClassIdentifier: '::'
   fullHeart: {fileID: -8616975035057024208, guid: 61052c17a09cadd4d8175dbc7f2f1eab, type: 3}
   halfHeart: {fileID: -823707551, guid: 61052c17a09cadd4d8175dbc7f2f1eab, type: 3}
   emptyHeart: {fileID: 1007663062, guid: 61052c17a09cadd4d8175dbc7f2f1eab, type: 3}
