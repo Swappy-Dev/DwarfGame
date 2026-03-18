@@ -1144,63 +1144,6 @@ Sprite:
   m_Bones: []
   m_ScriptableObjects: []
   m_SpriteID: 
---- !u!1001 &612698715
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4976061393725893524, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.2275438
-      objectReference: {fileID: 0}
-    - target: {fileID: 4976061393725893524, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.0398593
-      objectReference: {fileID: 0}
-    - target: {fileID: 4976061393725893524, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4976061393725893524, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4976061393725893524, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4976061393725893524, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4976061393725893524, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4976061393725893524, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4976061393725893524, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4976061393725893524, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5035918202185905133, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
-      propertyPath: m_Name
-      value: Mole_Bombadier
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
 --- !u!114 &622687175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93819,4 +93762,3 @@ SceneRoots:
   - {fileID: 126854768}
   - {fileID: 231283783}
   - {fileID: 1092541102}
-  - {fileID: 612698715}
