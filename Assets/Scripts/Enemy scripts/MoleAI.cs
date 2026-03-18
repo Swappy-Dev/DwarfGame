@@ -10,6 +10,7 @@ public class MoleAI : MonoBehaviour
     public float visionRange = 10f;
     public LayerMask obstacleLayer;
     public float wallAvoidanceDistance = 1.5f; 
+
     [Header("Combat")]
     public GameObject pickaxePrefab;
     public float throwDistance = 6f;
