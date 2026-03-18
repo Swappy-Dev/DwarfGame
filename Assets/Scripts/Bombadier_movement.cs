@@ -35,18 +35,12 @@ public class Bombadier_movement : MonoBehaviour
 
     void Update()
     {
+        // Update SHOULD ONLY flip the sprite! Do not put the Dynamite throw here!
         if (player != null)
         {
             Vector2 directionToPlayer = player.position - transform.position;
-
-            if (directionToPlayer.x < 0)
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-            else if (directionToPlayer.x > 0)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
+            if (directionToPlayer.x < 0) transform.localScale = new Vector3(1, 1, 1);
+            else if (directionToPlayer.x > 0) transform.localScale = new Vector3(-1, 1, 1);
         }
     }
 
