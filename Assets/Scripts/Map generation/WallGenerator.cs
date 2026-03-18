@@ -6,10 +6,45 @@ public static class WallGenerator
 {
     public static void CreateWalls(HashSet<Vector2Int> floorPosition, TileMapVisualization tilemapVizualization)
     {
-        var basicWallPositions = FindWallsInDirections(floorPosition, Direction2D.cardinalDirectionsList);
-        foreach (var position in basicWallPositions)
+        var cornerWallPositions = FindWallsInDirections(floorPosition, Direction2D.eightDirectionsList);
+        CreateCornerWall(tilemapVizualization, cornerWallPositions, floorPosition);
+    }
+
+    private static void CreateCornerWall(TileMapVisualization tilemapVizualization, HashSet<Vector2Int> cornerWallPositions, HashSet<Vector2Int> floorPosition)
+    {
+        foreach(var position in cornerWallPositions)
         {
-            tilemapVizualization.PaintSingleBasicWall(position);
+            string neighboursBinaryType = "";
+            foreach ( var direction in Direction2D.eightDirectionsList)
+            {
+                var neighbourPosition = position + direction;
+                if (floorPosition.Contains(neighbourPosition))
+                {
+                    neighboursBinaryType += "1";
+                }
+                else
+                {
+                    neighboursBinaryType += "0";
+                }
+            }
+            tilemapVizualization.PaintSingleCornerWall(position, neighboursBinaryType);
+        }
+        foreach (var position in cornerWallPositions)
+        {
+            string neighboursBinaryType = "";
+            foreach (var direction in Direction2D.eightDirectionsList)
+            {
+                var neighbourPosition = position + direction;
+                if (floorPosition.Contains(neighbourPosition))
+                {
+                    neighboursBinaryType += "1";
+                }
+                else
+                {
+                    neighboursBinaryType += "0";
+                }
+            }
+            tilemapVizualization.PaintHoles(position, neighboursBinaryType);
         }
     }
 

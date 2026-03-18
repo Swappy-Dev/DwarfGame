@@ -13,6 +13,17 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     private float roomPercent;
 
 
+    private void Start()
+    {
+        tileMapVisualization.Clear();
+        GenerateDungeon();
+    }
+
+    public new void GenerateDungeon()
+    {
+        RunProceduralGeneration();
+    }
+
     protected override void RunProceduralGeneration()
     {
         CorridorFirstGeneration();
