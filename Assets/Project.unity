@@ -591,6 +591,63 @@ Sprite:
   m_Bones: []
   m_ScriptableObjects: []
   m_SpriteID: 
+--- !u!1001 &203943099
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2083129848348077360, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_Name
+      value: Mole_Miner
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271281974794858126, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.3676946
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271281974794858126, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.469963
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271281974794858126, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271281974794858126, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271281974794858126, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271281974794858126, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271281974794858126, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271281974794858126, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271281974794858126, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271281974794858126, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
 --- !u!1 &231283779
 GameObject:
   m_ObjectHideFlags: 0
@@ -57766,6 +57823,7 @@ GameObject:
   - component: {fileID: 692188182}
   - component: {fileID: 692188186}
   - component: {fileID: 692188187}
+  - component: {fileID: 692188188}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -57915,6 +57973,20 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &692188188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692188181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ca843651c402c44bc2b49b2bb5ed18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraShake
+  duration: 0.15
+  magnitude: 0.1
 --- !u!213 &733155191
 Sprite:
   m_ObjectHideFlags: 0
@@ -92682,6 +92754,7 @@ MonoBehaviour:
   maxHealth: 6
   currentHealth: 6
   invincibilityTime: 0.5
+  animator: {fileID: 1563114540}
 --- !u!70 &1563114539
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -93763,3 +93836,4 @@ SceneRoots:
   - {fileID: 126854768}
   - {fileID: 231283783}
   - {fileID: 1092541102}
+  - {fileID: 203943099}

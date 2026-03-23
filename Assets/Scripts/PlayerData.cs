@@ -12,6 +12,10 @@ public class PlayerData : MonoBehaviour
     public float invincibilityTime = 0.8f; // Increased slightly for safety
     private float invincibilityTimer = 0f;
 
+    // (new) added for taken damanage red flash
+    [SerializeField] private Animator animator;
+    private const string flashRedAnim = "FlashRed";
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -40,6 +44,9 @@ public class PlayerData : MonoBehaviour
         Debug.Log("Player hit for " + damage + " damage. Remaining: " + currentHealth);
 
         OnPlayerDamaged?.Invoke();
+
+        // (new) added for red flash taking damage
+        animator.SetTrigger(flashRedAnim);
 
         if (currentHealth <= 0)
         {
