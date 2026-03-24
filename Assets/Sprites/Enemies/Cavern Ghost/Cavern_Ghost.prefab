@@ -198,6 +198,6 @@ MonoBehaviour:
   attackRange: 1
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   damage: 1
   attackCooldown: 2
