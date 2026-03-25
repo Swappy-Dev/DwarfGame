@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 5448252132458172477}
   - component: {fileID: 2175733863865641318}
   - component: {fileID: 6551414470109090087}
-  m_Layer: 0
+  - component: {fileID: -8252472815901129509}
+  m_Layer: 7
   m_Name: Mole_Miner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,3 +218,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCollisionWithPlayer
   knockbackForce: 4
   enemyDamageAmount: 1
+--- !u!114 &-8252472815901129509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083129848348077360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ada6eda0f6ed1e4db1460931f3219f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 3
+  deathEffect: {fileID: 0}

@@ -9,7 +9,7 @@ public class PlayerData : MonoBehaviour
     public int maxHealth = 10;
     public int currentHealth;
 
-    public float invincibilityTime = 0.8f; // Increased slightly for safety
+    public float invincibilityTime = 0.8f; 
     private float invincibilityTimer = 0f;
 
     // (new) added for taken damanage red flash

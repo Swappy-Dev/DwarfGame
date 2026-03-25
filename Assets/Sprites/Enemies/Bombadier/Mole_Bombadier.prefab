@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 5103022768606917722}
   - component: {fileID: -4121314694496566306}
   - component: {fileID: 8201490811375233359}
-  m_Layer: 0
+  - component: {fileID: -4317525438199876500}
+  m_Layer: 7
   m_Name: Mole_Bombadier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,3 +215,17 @@ MonoBehaviour:
   timeBetweenDigs: 3
   popupDistance: 3
   dynamitePrefab: {fileID: 8306599081183977204, guid: 8bd3f5a4a57317348a2413cea26f70e0, type: 3}
+--- !u!114 &-4317525438199876500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035918202185905133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ada6eda0f6ed1e4db1460931f3219f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 3
+  deathEffect: {fileID: 8306599081183977204, guid: 8bd3f5a4a57317348a2413cea26f70e0, type: 3}

@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 472654831229612697}
   - component: {fileID: 6175836213163413418}
   - component: {fileID: 7188253653806902407}
-  m_Layer: 0
+  - component: {fileID: -6591903709225446478}
+  m_Layer: 7
   m_Name: Cavern_Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,3 +202,17 @@ MonoBehaviour:
     m_Bits: 64
   damage: 1
   attackCooldown: 2
+--- !u!114 &-6591903709225446478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4413109675941010222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ada6eda0f6ed1e4db1460931f3219f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 3
+  deathEffect: {fileID: 0}

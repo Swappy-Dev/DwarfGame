@@ -22,6 +22,9 @@ public class MoleAI : MonoBehaviour
     private float repositionTimer;
     private Vector2 randomRepositionSpot;
 
+    // Šis kintamasis atsimins, kur? kirtikl? kurmis išmet?
+    [HideInInspector] public GameObject activePickaxe;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -102,6 +105,10 @@ public class MoleAI : MonoBehaviour
         if (pickaxePrefab != null)
         {
             GameObject thrownPickaxe = Instantiate(pickaxePrefab, transform.position, Quaternion.identity);
+
+            // --- NAUJA: Išsaugome š? kirtikl?, kad žinotume, kieno jis! ---
+            activePickaxe = thrownPickaxe;
+
             BoomerangPickaxe pickaxeScript = thrownPickaxe.GetComponent<BoomerangPickaxe>();
 
             if (pickaxeScript != null)
