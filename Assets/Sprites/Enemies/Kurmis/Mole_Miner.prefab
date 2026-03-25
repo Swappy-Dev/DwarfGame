@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoleAI
   moveSpeed: 2
-  visionRange: 20
+  visionRange: 1
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -204,6 +204,7 @@ MonoBehaviour:
   pickaxePrefab: {fileID: 2064939721570238319, guid: c079ff4064f303f4885ccb13fa73f51a, type: 3}
   throwDistance: 6
   repositionTime: 0.75
+  activePickaxe: {fileID: 0}
 --- !u!114 &6551414470109090087
 MonoBehaviour:
   m_ObjectHideFlags: 0
