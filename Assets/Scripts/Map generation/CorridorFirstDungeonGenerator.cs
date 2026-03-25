@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +11,8 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     [SerializeField]
     [Range(0.1f,1)]
     private float roomPercent;
+    [SerializeField] 
+    private ObjectGenerator objectGenerator;
 
 
     private void Start()
@@ -34,25 +36,33 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         HashSet<Vector2Int> floorpositions = new HashSet<Vector2Int>();
         HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
 
+        // 1. Sukuriami koridoriai
         List<List<Vector2Int>> corridors = CreateCorridors(floorpositions, potentialRoomPositions);
-        
-        HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions);
-        
-        List<Vector2Int> deadEnds = FindAllDeadEnds(floorpositions);
+        HashSet<Vector2Int> corridorPositionsOnly = new HashSet<Vector2Int>(floorpositions);
 
+        // 2. Sukuriami kambariai
+        HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions);
+        List<Vector2Int> deadEnds = FindAllDeadEnds(floorpositions);
         CreateRoomsAtDeadEnd(deadEnds, roomPositions);
-        
+
+        // 3. Sujungiami visi grindų taškai vizualizacijai
         floorpositions.UnionWith(roomPositions);
 
+        // Koridorių platinimas...
         for (int i = 0; i < corridors.Count; i++)
         {
             corridors[i] = IncreaseCorridorSizeByOne(corridors[i]);
-            //corridors[i] = IncreaseCorridorBrush3by3(corridors[i]);
             floorpositions.UnionWith(corridors[i]);
         }
-        
+
         tileMapVisualization.PaintFloorTiles(floorpositions);
         WallGenerator.CreateWalls(floorpositions, tileMapVisualization);
+
+        // --- NAUJA DALIS: Objektų generavimas ---
+        if (objectGenerator != null)
+        {
+            objectGenerator.PlaceObjects(roomPositions, corridorPositionsOnly);
+        }
     }
 
     private List<Vector2Int> IncreaseCorridorSizeByOne(List<Vector2Int> corridor)
