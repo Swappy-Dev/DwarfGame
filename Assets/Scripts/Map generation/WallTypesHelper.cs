@@ -149,4 +149,14 @@ public static class WallTypesHelper
     {
         0b01000001
     };
+
+    public static HashSet<int> wallUpLeftDownRight = new HashSet<int>
+    {
+        0b00010001
+    };
+
+    public static HashSet<int> wallDownLeftUpRight = new HashSet<int>
+    {
+        0b01000100
+    };
 }
