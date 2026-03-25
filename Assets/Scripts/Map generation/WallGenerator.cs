@@ -27,7 +27,7 @@ public static class WallGenerator
                     neighboursBinaryType += "0";
                 }
             }
-            tilemapVizualization.PaintSingleCornerWall(position, neighboursBinaryType);
+            tilemapVizualization.PaintHoles(position, neighboursBinaryType);
         }
         foreach (var position in cornerWallPositions)
         {
@@ -44,7 +44,7 @@ public static class WallGenerator
                     neighboursBinaryType += "0";
                 }
             }
-            tilemapVizualization.PaintHoles(position, neighboursBinaryType);
+            tilemapVizualization.PaintSingleCornerWall(position, neighboursBinaryType);
         }
     }
 

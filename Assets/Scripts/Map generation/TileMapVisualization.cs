@@ -11,7 +11,8 @@ public class TileMapVisualization : MonoBehaviour
     [SerializeField]
     private TileBase floorTile, wallTop, wallSideRight, wallSideLeft, wallBottom,
         wallInnerCornerDownLeft, wallInnerCornerDownRight, wallInnerCornerUpLeft, wallInnerCornerUpRight,
-        wallDiagonalCornerDownRight, wallDiagonalCornerDownLeft, wallDiagonalCornerUpRight, wallDiagonalCornerUpLeft;
+        wallDiagonalCornerDownRight, wallDiagonalCornerDownLeft, wallDiagonalCornerUpRight, wallDiagonalCornerUpLeft,
+        wallUpLeftDownRight, wallDownLeftUpRight;
 
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
     {
@@ -95,6 +96,14 @@ public class TileMapVisualization : MonoBehaviour
         {
             tile = wallBottom;
         }
+        else if (WallTypesHelper.wallUpLeftDownRight.Contains(typeAsInt))
+        {
+            tile = wallUpLeftDownRight;
+        }
+        else if(WallTypesHelper.wallDownLeftUpRight.Contains(typeAsInt))
+        {
+            tile = wallDownLeftUpRight;
+        }
 
         if (tile != null)
             PaintSingleTile(wallTilemap, tile, position);
@@ -106,62 +115,9 @@ public class TileMapVisualization : MonoBehaviour
         int typeAsInt = Convert.ToInt32(binaryType, 2);
         TileBase tile = null;
 
-        if (WallTypesHelper.wallTop.Contains(typeAsInt))
-        {
-            tile = wallTop;
-        }
-        else if (WallTypesHelper.wallSideRight.Contains(typeAsInt))
-        {
-            tile = wallSideRight;
-        }
-        else if (WallTypesHelper.wallSideLeft.Contains(typeAsInt))
-        {
-            tile = wallSideLeft;
-        }
-        else if (WallTypesHelper.wallBottm.Contains(typeAsInt))
-        {
-            tile = wallBottom;
-        }
-        else if (WallTypesHelper.wallInnerCornerDownLeft.Contains(typeAsInt))
-        {
-            tile = wallInnerCornerDownLeft;
-        }
-        else if (WallTypesHelper.wallInnerCornerDownRight.Contains(typeAsInt))
-        {
-            tile = wallInnerCornerDownRight;
-        }
-        else if (WallTypesHelper.wallInnerCornerUpRight.Contains(typeAsInt))
-        {
-            tile = wallInnerCornerUpRight;
-        }
-        else if (WallTypesHelper.wallInnerCornerUpLeft.Contains(typeAsInt))
-        {
-            tile = wallInnerCornerUpLeft;
-        }
-        else if (WallTypesHelper.wallDiagonalCornerDownLeft.Contains(typeAsInt))
-        {
-            tile = wallDiagonalCornerDownLeft;
-        }
-        else if (WallTypesHelper.wallDiagonalCornerDownRight.Contains(typeAsInt))
-        {
-            tile = wallDiagonalCornerDownRight;
-        }
-        else if (WallTypesHelper.wallDiagonalCornerUpRight.Contains(typeAsInt))
-        {
-            tile = wallDiagonalCornerUpRight;
-        }
-        else if (WallTypesHelper.wallDiagonalCornerUpLeft.Contains(typeAsInt))
-        {
-            tile = wallDiagonalCornerUpLeft;
-        }
-        else if (WallTypesHelper.wallBottmEightDirections.Contains(typeAsInt))
-        {
-            tile = wallBottom;
-        }
-        else
-        {
-            tile = floorTile;
-        }
+        
+        tile = floorTile;
+        
 
         if(tile == floorTile)
             PaintSingleTile(floorTilemap, tile, position);
