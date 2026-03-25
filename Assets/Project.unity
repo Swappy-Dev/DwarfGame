@@ -930,6 +930,7 @@ MonoBehaviour:
   corridorLength: 20
   corridorCount: 100
   roomPercent: 0.264
+  objectGenerator: {fileID: 1974108244}
 --- !u!4 &428475868
 Transform:
   m_ObjectHideFlags: 0
@@ -112439,6 +112440,93 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 3
   m_ColliderType: 1
+--- !u!1 &1974108243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1974108245}
+  - component: {fileID: 1974108244}
+  m_Layer: 0
+  m_Name: DungeonObjectGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1974108244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974108243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d700eadd99a3d9642b37b74e0f813674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectGenerator
+  objectsToPlace:
+  - prefab: {fileID: 2083129848348077360, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
+    placementProbability: 0.002
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 5035918202185905133, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
+    placementProbability: 0.005
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 4413109675941010222, guid: ccee89ae9610f764caa7f2b290ce5111, type: 3}
+    placementProbability: 0.005
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 2534911238083473117, guid: 2fd9d4b9c2ba5e241b6948007f5832d3, type: 3}
+    placementProbability: 0.01
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 2184211777796897941, guid: bee87117ea503c14e9eb0a6f085323c8, type: 3}
+    placementProbability: 0.01
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 7107895841589488301, guid: 8a012fd4ce6cd19448a83b35bd7bec88, type: 3}
+    placementProbability: 0.01
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 2162677814975031117, guid: 402ee9ce5a92d8b48b2f8cf44be1dd27, type: 3}
+    placementProbability: 0.01
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 6372008186049212560, guid: a61c1edb03d6001489d645ebc3fd77c1, type: 3}
+    placementProbability: 0.0033
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 5561476952532559513, guid: a822bb739fd83d940afc494925320eed, type: 3}
+    placementProbability: 0.0033
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 1249450858155366585, guid: 45c8de0d8c660fd47ae8204d8f7e4244, type: 3}
+    placementProbability: 0.0033
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 1077285161442289188, guid: c193a84577b904749be5360125779452, type: 3}
+    placementProbability: 0.005
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 2340444507488603564, guid: b6fd8d4017db03f44bb7d1e40f3d1139, type: 3}
+    placementProbability: 0.0005
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 4903893954811492520, guid: a5fafbf666821bc4cb30ee3868e3047b, type: 3}
+    placementProbability: 0.0005
+    placeInRoomsOnly: 1
+  - prefab: {fileID: 8894913228478848492, guid: 334289f18e7f15c47959c49085722b7f, type: 3}
+    placementProbability: 0.005
+    placeInRoomsOnly: 1
+--- !u!4 &1974108245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974108243}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.04484, y: -0.54662, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!213 &2015135764
 Sprite:
   m_ObjectHideFlags: 0
@@ -112908,3 +112996,4 @@ SceneRoots:
   - {fileID: 1286767281}
   - {fileID: 237378519}
   - {fileID: 1721877698}
+  - {fileID: 1974108245}
