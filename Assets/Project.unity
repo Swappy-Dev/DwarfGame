@@ -758,7 +758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectGenerator
   objectsToPlace:
   - prefab: {fileID: 2083129848348077360, guid: ff1e4cfac85e1bb4a9ed3eb822e3a48c, type: 3}
-    placementProbability: 0.005
+    placementProbability: 0.002
     placeInRoomsOnly: 1
   - prefab: {fileID: 5035918202185905133, guid: d7db0ea0731a6cb4abd2bb11fbb52fee, type: 3}
     placementProbability: 0.005
