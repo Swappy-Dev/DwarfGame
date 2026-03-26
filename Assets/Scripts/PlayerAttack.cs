@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
-    public Transform attackPoint;       // Nematomas taškas prie pat žaidėjo (kur kerta kardas)
-    public Transform crosshair;         // NAUJA: Vizualus taikiklis, kuris laisvai sekios pelę!
+    public Transform attackPoint;       // Invisible point near the player (where the sword hits)
+    public Transform crosshair;         // The visual crosshair object
 
     public float attackDistance = 1.2f;
     public float attackRange = 0.6f;
@@ -19,7 +19,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
-        // Paslepiame Windows pelę
+        // Hide the default Windows mouse cursor
         Cursor.visible = false;
     }
 
@@ -41,21 +41,19 @@ public class PlayerAttack : MonoBehaviour
     {
         if (attackPoint == null || Mouse.current == null) return;
 
+        // Get mouse position
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
         mousePosition.z = 0f;
 
-        // 1. Vizualus taikiklis laisvai nuskrenda tiksliai ten, kur yra pelė!
-        if (crosshair != null)
-        {
-            crosshair.position = mousePosition;
-        }
+        // --- REMOVED CROSSHAIR.POSITION TELEPORTATION HERE ---
+        // We let CrosshairScript handle the visual position to prevent jittering.
 
-        // 2. Tikrasis (nematomas) smūgio taškas lieka arti žaidėjo, bet atsisuka į pelės pusę
+        // Calculate direction for the actual (invisible) hit point
         Vector3 direction = (mousePosition - transform.position).normalized;
         attackPoint.position = transform.position + direction * attackDistance;
 
-        // 3. Apverčiame žaidėją
+        // Flip the player based on mouse side
         if (mousePosition.x < transform.position.x)
         {
             transform.localScale = new Vector3(-1, 1, 1);
@@ -68,6 +66,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
+        // Logic for hitting enemies
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
