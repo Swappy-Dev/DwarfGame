@@ -21,12 +21,13 @@ public class CavernGhostAI : MonoBehaviour
     public float dashSpeed = 15f;
     public float dashDuration = 0.35f;
     public float windUpTime = 0.5f;
-    public float dashSeekRange = 5f; // NEW: The distance from which he will dash at you
+    public float dashSeekRange = 5f;
     public Color dashTelegraphColor = Color.white;
 
     [Header("Ghost Trail")]
-    public float trailSpawnInterval = 0.04f;
-    public float trailFadeSpeed = 4f;
+    public Color ghostColor = new Color(0.5f, 0.5f, 1f, 0.5f); // Bluish transparent
+    public float trailSpawnInterval = 0.05f;
+    public float trailFadeSpeed = 3f;
 
     private Transform player;
     private Rigidbody2D rb;
@@ -56,20 +57,15 @@ public class CavernGhostAI : MonoBehaviour
 
         HandleFacing();
 
-        // LOGIC BRANCH:
-        // If we are ready for the 3rd attack, we don't wait to get close. 
-        // We just need to be within dashSeekRange.
         if (attackCount >= 2 && dist <= dashSeekRange && Time.time >= nextAttackTime)
         {
-            attackCount = 0; // Reset for next cycle
+            attackCount = 0;
             StartCoroutine(DashAttackSequence());
         }
-        // Otherwise, do normal behavior (Close-range normal attacks)
         else if (dist <= attackRange && Time.time >= nextAttackTime)
         {
             PerformNormalAttack();
         }
-        // Chase behavior
         else if (dist < chaseRange && dist > stopDistance)
         {
             MoveWithWallSliding();
@@ -82,7 +78,6 @@ public class CavernGhostAI : MonoBehaviour
 
     void HandleFacing()
     {
-        // Don't flip while dashing to keep the momentum looking right
         if (isBusy) return;
 
         if (player.position.x < transform.position.x)
@@ -93,7 +88,7 @@ public class CavernGhostAI : MonoBehaviour
 
     void PerformNormalAttack()
     {
-        attackCount++; // Increments after attack 1 and 2
+        attackCount++;
         nextAttackTime = Time.time + attackCooldown;
         anim.SetTrigger("Ghost_Attack");
         DealDamage();
@@ -104,17 +99,16 @@ public class CavernGhostAI : MonoBehaviour
         isBusy = true;
         rb.linearVelocity = Vector2.zero;
 
-        // 1. Telegraph: Lock onto player position at THIS moment
+        // Telegraph
         spriteRenderer.color = dashTelegraphColor;
         Vector2 dashDir = (player.position - transform.position).normalized;
 
-        // Face the dash direction
         if (dashDir.x < 0) transform.localScale = new Vector3(1, 1, 1);
         else transform.localScale = new Vector3(-1, 1, 1);
 
         yield return new WaitForSeconds(windUpTime);
 
-        // 2. Dash Start
+        // Dash Start
         spriteRenderer.color = originalColor;
         anim.SetTrigger("Ghost_Dash");
 
@@ -125,6 +119,7 @@ public class CavernGhostAI : MonoBehaviour
         {
             rb.linearVelocity = dashDir * dashSpeed;
 
+            // SPAWN TRAIL
             trailTimer -= Time.deltaTime;
             if (trailTimer <= 0)
             {
@@ -134,7 +129,6 @@ public class CavernGhostAI : MonoBehaviour
             yield return null;
         }
 
-        // 3. Recovery
         rb.linearVelocity = Vector2.zero;
         nextAttackTime = Time.time + attackCooldown;
         yield return new WaitForSeconds(0.4f);
@@ -161,17 +155,22 @@ public class CavernGhostAI : MonoBehaviour
 
     void CreateAfterimage()
     {
-        GameObject trailObj = new GameObject("Trail");
+        // Create the object
+        GameObject trailObj = new GameObject("GhostTrail_Instance");
         trailObj.transform.position = transform.position;
         trailObj.transform.localScale = transform.localScale;
+        trailObj.transform.rotation = transform.rotation;
 
+        // Add and setup SpriteRenderer
         SpriteRenderer tr = trailObj.AddComponent<SpriteRenderer>();
-        tr.sprite = spriteRenderer.sprite;
-        tr.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0.6f);
-        tr.sortingOrder = spriteRenderer.sortingOrder - 1;
+        tr.sprite = spriteRenderer.sprite; // Capture current frame
+        tr.color = ghostColor;
+        tr.sortingLayerID = spriteRenderer.sortingLayerID;
+        tr.sortingOrder = spriteRenderer.sortingOrder - 1; // Just behind the ghost
 
-        Destroy(trailObj, 0.8f);
+        // Fade it out
         StartCoroutine(FadeTrail(tr));
+        Destroy(trailObj, 1f); // Cleanup safeguard
     }
 
     IEnumerator FadeTrail(SpriteRenderer tr)
@@ -181,7 +180,12 @@ public class CavernGhostAI : MonoBehaviour
             Color c = tr.color;
             c.a -= trailFadeSpeed * Time.deltaTime;
             tr.color = c;
-            if (c.a <= 0) break;
+
+            if (c.a <= 0)
+            {
+                Destroy(tr.gameObject);
+                yield break;
+            }
             yield return null;
         }
     }

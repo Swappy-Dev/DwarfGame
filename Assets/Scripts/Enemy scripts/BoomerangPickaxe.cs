@@ -6,23 +6,28 @@ public class BoomerangPickaxe : MonoBehaviour
     public int damage = 1;
 
     private Transform mole;
-    private MoleAI moleAI;
+    private MinerMole moleScript; // Updated from MoleAI to MinerMole
     private Vector2 targetPosition;
     private bool isReturning = false;
-
     private bool hasHitPlayer = false;
 
     public void Throw(Transform thrower, Vector2 targetPos)
     {
         mole = thrower;
-        moleAI = thrower.GetComponent<MoleAI>();
+        // Make sure this matches your actual script name
+        moleScript = thrower.GetComponent<MinerMole>();
         targetPosition = targetPos;
         isReturning = false;
     }
 
     void Update()
     {
-        if (mole == null) return;
+        // 1. Safety Check: If the mole was destroyed, just destroy the pickaxe too
+        if (mole == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         transform.Rotate(0, 0, -800 * Time.deltaTime);
 
@@ -37,9 +42,15 @@ public class BoomerangPickaxe : MonoBehaviour
         else
         {
             transform.position = Vector2.MoveTowards(transform.position, mole.position, speed * Time.deltaTime);
+
             if (Vector2.Distance(transform.position, mole.position) < 0.5f)
             {
-                moleAI.CatchPickaxe();
+                // 2. Safety Check: Only call CatchPickaxe if we successfully found the script
+                if (moleScript != null)
+                {
+                    moleScript.CatchPickaxe();
+                }
+
                 Destroy(gameObject);
             }
         }
@@ -59,7 +70,7 @@ public class BoomerangPickaxe : MonoBehaviour
             isReturning = true;
         }
 
-        
+        // Check for walls/obstacles
         if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacles"))
         {
             isReturning = true;
