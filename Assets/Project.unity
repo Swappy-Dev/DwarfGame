@@ -111449,6 +111449,7 @@ GameObject:
   - component: {fileID: 1563114540}
   - component: {fileID: 1563114541}
   - component: {fileID: 1563114542}
+  - component: {fileID: 1563114543}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -111713,6 +111714,22 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &1563114543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563114531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2921fd449eb765941b9de9e4f6c46dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDash
+  dashActionReference: {fileID: 5470260857545536740, guid: a30dab0a4ab1a3f49a1e7a5eb7fdfab6, type: 3}
+  dashPower: 20
+  dashDuration: 0.2
+  dashCooldown: 1
 --- !u!213 &1566793876
 Sprite:
   m_ObjectHideFlags: 0

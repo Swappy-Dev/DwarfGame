@@ -11,28 +11,35 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 movementInput;
-
-    // The timer that controls how long we are stunned
     public float knockbackTimer = 0f;
+
+    // --- NEW: Reference to the Dash script ---
+    private PlayerDash playerDash;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        // --- NEW: Get the dash component ---
+        playerDash = GetComponent<PlayerDash>();
+    }
+
+    // --- NEW: Public function so PlayerDash can see which way we are moving ---
+    public Vector2 GetMovementInput()
+    {
+        return movementInput;
     }
 
     private void FixedUpdate()
     {
-       
+        // --- NEW: Prevent walking if we are currently dashing ---
+        if (playerDash != null && playerDash.isDashing) return;
+
         if (knockbackTimer > 0)
         {
-            
             knockbackTimer -= Time.fixedDeltaTime;
-
-            // Exit immediately! Do NOT run the walking code below.
             return;
         }
 
-        
         Vector2 movement = movementInput.normalized * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
     }
@@ -61,12 +68,13 @@ public class PlayerMovement : MonoBehaviour
         movementInput = Vector2.zero;
     }
 
-    // Del movement directions, netrinti fu fu fu
-
     [SerializeField] private Animator animator;
 
     private void Update()
     {
+        // --- NEW: Don't update "Walking" animations if we are dashing ---
+        if (playerDash != null && playerDash.isDashing) return;
+
         UpdateAnimations();
     }
 
@@ -74,29 +82,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (animator == null) return;
 
-        // 1. Reset all bools to false first so they don't get "stuck" on
         animator.SetBool("IsWalkingRight", false);
         animator.SetBool("IsWalkingLeft", false);
         animator.SetBool("IsWalkingUp", false);
         animator.SetBool("IsWalkingDown", false);
 
-        // 2. Check direction and set the correct bool
-        // We use a small threshold (0.1) to avoid jitter
-        if (movementInput.x > 0.1f)
-        {
-            animator.SetBool("IsWalkingRight", true);
-        }
-        else if (movementInput.x < -0.1f)
-        {
-            animator.SetBool("IsWalkingLeft", true);
-        }
-        else if (movementInput.y > 0.1f)
-        {
-            animator.SetBool("IsWalkingUp", true);
-        }
-        else if (movementInput.y < -0.1f)
-        {
-            animator.SetBool("IsWalkingDown", true);
-        }
+        if (movementInput.x > 0.1f) animator.SetBool("IsWalkingRight", true);
+        else if (movementInput.x < -0.1f) animator.SetBool("IsWalkingLeft", true);
+        else if (movementInput.y > 0.1f) animator.SetBool("IsWalkingUp", true);
+        else if (movementInput.y < -0.1f) animator.SetBool("IsWalkingDown", true);
     }
 }
