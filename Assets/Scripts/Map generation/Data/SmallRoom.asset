@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SmallRoom
   m_EditorClassIdentifier: Assembly-CSharp::SimpleRandomWalkSO
   iterations: 50
-  walkLength: 15
+  walkLength: 10
   startRandomlyEachGeneration: 1

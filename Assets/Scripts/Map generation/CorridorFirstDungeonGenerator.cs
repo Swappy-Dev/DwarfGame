@@ -13,6 +13,8 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     private float roomPercent;
     [SerializeField] 
     private ObjectGenerator objectGenerator;
+    [SerializeField] 
+    private GameObject player;
 
 
     private void Start()
@@ -36,32 +38,45 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         HashSet<Vector2Int> floorpositions = new HashSet<Vector2Int>();
         HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
 
-        // 1. Sukuriami koridoriai
+        // 1. Sugeneruojame koridorius
         List<List<Vector2Int>> corridors = CreateCorridors(floorpositions, potentialRoomPositions);
+
+        // ŠTAI ČIA: Sukuriame atskirą sąrašą tik koridorių plytelėms
         HashSet<Vector2Int> corridorPositionsOnly = new HashSet<Vector2Int>(floorpositions);
 
-        // 2. Sukuriami kambariai
-        HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions);
-        List<Vector2Int> deadEnds = FindAllDeadEnds(floorpositions);
-        CreateRoomsAtDeadEnd(deadEnds, roomPositions);
+        // 2. Sugeneruojame Spawn kambarį (kad žaidėjas turėtų kur stovėti)
+        var spawnRoomFloor = RunRandomWalk(randomWalkParameters, startPosition);
 
-        // 3. Sujungiami visi grindų taškai vizualizacijai
+        // 3. Sugeneruojame likusius kambarius
+        HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions);
+
+        // Sujungiame viską į bendrą grindų sąrašą
+        roomPositions.UnionWith(spawnRoomFloor);
         floorpositions.UnionWith(roomPositions);
 
-        // Koridorių platinimas...
+        // 4. Sutvarkome koridorių platinimą (vizualiai)
         for (int i = 0; i < corridors.Count; i++)
         {
             corridors[i] = IncreaseCorridorSizeByOne(corridors[i]);
             floorpositions.UnionWith(corridors[i]);
         }
 
+        // Nupiešiame viską
+        tileMapVisualization.Clear();
         tileMapVisualization.PaintFloorTiles(floorpositions);
         WallGenerator.CreateWalls(floorpositions, tileMapVisualization);
 
-        // --- NAUJA DALIS: Objektų generavimas ---
+        // 5. Perduodame duomenis objektų generatoriui
         if (objectGenerator != null)
         {
-            objectGenerator.PlaceObjects(roomPositions, corridorPositionsOnly);
+            // Perduodame: 1. Visi kambariai, 2. Tik koridoriai, 3. Tik Spawn kambarys
+            objectGenerator.PlaceObjects(roomPositions, corridorPositionsOnly, spawnRoomFloor);
+        }
+
+        // Perkeliame žaidėją
+        if (player != null)
+        {
+            player.transform.position = new Vector3(startPosition.x + 0.5f, startPosition.y + 0.5f, 0);
         }
     }
 
@@ -140,9 +155,14 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
-        int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count * roomPercent);
-    
-        List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
+
+        // Filtruojame: paliekame tik tuos taškus, kurie yra toliau nei per 10 plytelių nuo starto
+        var filteredPositions = potentialRoomPositions
+            .Where(pos => Vector2Int.Distance(pos, startPosition) > 10)
+            .ToList();
+
+        int roomToCreateCount = Mathf.RoundToInt(filteredPositions.Count * roomPercent);
+        List<Vector2Int> roomsToCreate = filteredPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
 
         foreach (var roomPosition in roomsToCreate)
         {

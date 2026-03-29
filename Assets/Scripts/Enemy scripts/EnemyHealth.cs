@@ -35,22 +35,16 @@ public class EnemyHealth : MonoBehaviour
             Instantiate(deathEffect, transform.position, Quaternion.identity);
         }
 
-        // --- NAUJA: Sunaikiname ore skraidantį kirtiklį! ---
+        // Sunaikiname kirtiklį, jei toks yra
         MoleAI moleAI = GetComponent<MoleAI>();
         if (moleAI != null && moleAI.activePickaxe != null)
         {
             Destroy(moleAI.activePickaxe);
         }
 
-        // Sunaikiname patį priešą
-        if (transform.parent != null)
-        {
-            Destroy(transform.parent.gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // TEISINGAS PAKEITIMAS:
+        // Naikiname tik šį konkretų priešą, o ne jo tėvą (generatorių)
+        Destroy(gameObject);
     }
 
 }
