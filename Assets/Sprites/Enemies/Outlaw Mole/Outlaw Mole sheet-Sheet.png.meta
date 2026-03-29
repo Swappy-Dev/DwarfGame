@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: a47bca09d916dce40b207900bf84604d
+guid: a932569a678416d4aaca800b628524ff
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7507132621070529871
-    second: Kurmis_Bombadier-Sheet_0
-  - first:
-      213: 265962986960167541
-    second: Kurmis_Bombadier-Sheet_1
-  - first:
-      213: -4132092066520519426
-    second: Kurmis_Bombadier-Sheet_2
+      213: -178663377754705748
+    second: Outlaw Mole sheet-Sheet_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_0
+      name: Outlaw Mole sheet-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -121,14 +115,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1ba0857d7ae41d790800000000000000
-      internalID: -7507132621070529871
+      spriteID: ca03f82ca92458df0800000000000000
+      internalID: -178663377754705748
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_1
+      name: Outlaw Mole sheet-Sheet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -141,16 +135,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 572a9217de3e0b300800000000000000
-      internalID: 265962986960167541
+      spriteID: 57890b38715bfab4aa900e664f84a6c3
+      internalID: -705751232
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_2
+      name: Outlaw Mole sheet-Sheet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -163,16 +157,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: efca5d3882cd7a6c0800000000000000
-      internalID: -4132092066520519426
+      spriteID: 81ad700bd66394041a7d257dd742000a
+      internalID: 984181965
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_3
+      name: Outlaw Mole sheet-Sheet_3
       rect:
         serializedVersion: 2
         x: 96
@@ -187,14 +181,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f5dbf94d1c1e5648ab040e0f9caab16
-      internalID: 130282359
+      spriteID: 7dea12c6d84a7fa44a991987e4374bec
+      internalID: -1793159476
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_4
+      name: Outlaw Mole sheet-Sheet_4
       rect:
         serializedVersion: 2
         x: 128
@@ -209,14 +203,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a3b0cf380ed9a94889f3bee28a12f86
-      internalID: 214010815
+      spriteID: ef9f61ac18c7f7a4da020f631bf120b9
+      internalID: -638785361
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_5
+      name: Outlaw Mole sheet-Sheet_5
       rect:
         serializedVersion: 2
         x: 160
@@ -231,14 +225,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a235c990f618200449b7e19a64efaaa5
-      internalID: -472400609
+      spriteID: cd686cab00a3a124298935b437351207
+      internalID: 1895938469
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_6
+      name: Outlaw Mole sheet-Sheet_6
       rect:
         serializedVersion: 2
         x: 192
@@ -253,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c2ac582dbe088b45982a70d34807228
-      internalID: 410005337
+      spriteID: 215196f411ba9204eb578784dfeadf88
+      internalID: -2120419344
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_7
+      name: Outlaw Mole sheet-Sheet_7
       rect:
         serializedVersion: 2
         x: 224
@@ -275,14 +269,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12601b97d64bf4248bf729574debcebc
-      internalID: 1603424588
+      spriteID: 37651bb66a5048f4484904406af7e372
+      internalID: -1572487741
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_8
+      name: Outlaw Mole sheet-Sheet_8
       rect:
         serializedVersion: 2
         x: 256
@@ -297,14 +291,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e1d54c82dfd5c145847422e481a1ea7
-      internalID: -1810882511
+      spriteID: d9bd19a5954b44347b0c37fc3c44db28
+      internalID: -594431384
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_9
+      name: Outlaw Mole sheet-Sheet_9
       rect:
         serializedVersion: 2
         x: 288
@@ -319,14 +313,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 901dcc22d7e82e64cbaadf87e855d3cf
-      internalID: 386976714
+      spriteID: 62bc29de3a6bfdf44aad38eb90c88894
+      internalID: 431710688
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_10
+      name: Outlaw Mole sheet-Sheet_10
       rect:
         serializedVersion: 2
         x: 320
@@ -341,14 +335,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9db751c0d8337d45ad657089f997848
-      internalID: 1875615907
+      spriteID: db74422c3c520654094c768985ed1f7c
+      internalID: 2005715650
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_11
+      name: Outlaw Mole sheet-Sheet_11
       rect:
         serializedVersion: 2
         x: 352
@@ -363,14 +357,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76047e4346528304cac53300307063d7
-      internalID: 1668393200
+      spriteID: 4af080b98cf139848ac9e67c89039ad8
+      internalID: 1414998252
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_12
+      name: Outlaw Mole sheet-Sheet_12
       rect:
         serializedVersion: 2
         x: 384
@@ -385,14 +379,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 64a924ea8bb978940a38b04f0b570ece
-      internalID: -1105949642
+      spriteID: 3a157bcc21c4ce942abdb00fa366b8a0
+      internalID: -128655635
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_13
+      name: Outlaw Mole sheet-Sheet_13
       rect:
         serializedVersion: 2
         x: 416
@@ -407,14 +401,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7527a7bf8d02bd46962112714a5bffa
-      internalID: 1990818854
+      spriteID: c689f30b90b7a1149a4eece8245ad26f
+      internalID: 492368570
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_14
+      name: Outlaw Mole sheet-Sheet_14
       rect:
         serializedVersion: 2
         x: 448
@@ -429,14 +423,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a243cdba18d7ed94f8cc9c2094d12c02
-      internalID: -1902142751
+      spriteID: e8fa8d86dd2d6a34f9ff6a87e31886cd
+      internalID: -451381490
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_15
+      name: Outlaw Mole sheet-Sheet_15
       rect:
         serializedVersion: 2
         x: 480
@@ -451,14 +445,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: daf9cf8bc836f974b95f69b401d171f6
-      internalID: -906326718
+      spriteID: d772dda2877809b41a354856e3478bba
+      internalID: 729101730
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_16
+      name: Outlaw Mole sheet-Sheet_16
       rect:
         serializedVersion: 2
         x: 512
@@ -473,14 +467,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d343b94cd4b79848a9df7ba332d453e
-      internalID: 777724340
+      spriteID: 61ae5c1bd723fe54ebb9333e785973b0
+      internalID: -212655646
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_17
+      name: Outlaw Mole sheet-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3305e1abbae9cd44a74b4aa40aaa82e
+      internalID: -572799468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Outlaw Mole sheet-Sheet_18
       rect:
         serializedVersion: 2
         x: 576
@@ -495,14 +511,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 373371d0a9d4c704287467ff66a3ff1c
-      internalID: -1503864439
+      spriteID: 652501d034e317f4cbf65dd037019b9d
+      internalID: 2029095282
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_18
+      name: Outlaw Mole sheet-Sheet_19
       rect:
         serializedVersion: 2
         x: 608
@@ -517,14 +533,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3cb0738eabb77a340a35a2358d136bc3
-      internalID: 620412957
+      spriteID: f6c6fc14196ea044fabc7173d45bce34
+      internalID: 1358657964
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_19
+      name: Outlaw Mole sheet-Sheet_20
       rect:
         serializedVersion: 2
         x: 640
@@ -539,14 +555,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2264f6864dea74499bea1180f82fe29
-      internalID: 723912680
+      spriteID: 2b124a8f9ca0c8f458f22f4d6d3476fb
+      internalID: 1610140588
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_20
+      name: Outlaw Mole sheet-Sheet_21
       rect:
         serializedVersion: 2
         x: 672
@@ -561,184 +577,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9481100c606953d46a347b21dbc3372a
-      internalID: 546628544
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_21
-      rect:
-        serializedVersion: 2
-        x: 704
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f5870f96180fe74ca7821035b840d1e
-      internalID: 1189125010
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_22
-      rect:
-        serializedVersion: 2
-        x: 736
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 05ffd434cd49e13439c5f60f04035451
-      internalID: -1371599805
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_23
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 374114ac942ba3445b8f0da9c3436889
-      internalID: 1008014635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_24
-      rect:
-        serializedVersion: 2
-        x: 800
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7210eb07ddd15314ebf65656891280d6
-      internalID: 1458488584
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_25
-      rect:
-        serializedVersion: 2
-        x: 832
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 35ff7ad5d1659ac4faeb3d915d5782ce
-      internalID: 836569084
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_26
-      rect:
-        serializedVersion: 2
-        x: 864
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ebe8a5487f8171549839e57ee99ef3d6
-      internalID: 726986906
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_27
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9f2596b625cbed44c97ea6fcbaed75ef
-      internalID: -1580099584
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Kurmis_Bombadier-Sheet_28
-      rect:
-        serializedVersion: 2
-        x: 928
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d836b33389dc2bf4c978e937ade87a19
-      internalID: 834443447
+      spriteID: c4a84da5b3fbce9419726d876db3a2c8
+      internalID: 2133075828
       vertices: []
       indices: 
       edges: []
@@ -747,7 +587,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 024301855600e7149bbaaf72d90ba5bb
+    spriteID: c13344cfdd1d8c34ea3474db79c6206f
     internalID: 0
     vertices: []
     indices: 
@@ -757,37 +597,32 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":true,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":true,"isAlternate":false}'
+      - key: SpriteEditor.SliceOnImport
+        value: True
     nameFileIdTable:
-      Kurmis_Bombadier-Sheet_0: -7507132621070529871
-      Kurmis_Bombadier-Sheet_1: 265962986960167541
-      Kurmis_Bombadier-Sheet_10: 1875615907
-      Kurmis_Bombadier-Sheet_11: 1668393200
-      Kurmis_Bombadier-Sheet_12: -1105949642
-      Kurmis_Bombadier-Sheet_13: 1990818854
-      Kurmis_Bombadier-Sheet_14: -1902142751
-      Kurmis_Bombadier-Sheet_15: -906326718
-      Kurmis_Bombadier-Sheet_16: 777724340
-      Kurmis_Bombadier-Sheet_17: -1503864439
-      Kurmis_Bombadier-Sheet_18: 620412957
-      Kurmis_Bombadier-Sheet_19: 723912680
-      Kurmis_Bombadier-Sheet_2: -4132092066520519426
-      Kurmis_Bombadier-Sheet_20: 546628544
-      Kurmis_Bombadier-Sheet_21: 1189125010
-      Kurmis_Bombadier-Sheet_22: -1371599805
-      Kurmis_Bombadier-Sheet_23: 1008014635
-      Kurmis_Bombadier-Sheet_24: 1458488584
-      Kurmis_Bombadier-Sheet_25: 836569084
-      Kurmis_Bombadier-Sheet_26: 726986906
-      Kurmis_Bombadier-Sheet_27: -1580099584
-      Kurmis_Bombadier-Sheet_28: 834443447
-      Kurmis_Bombadier-Sheet_3: 130282359
-      Kurmis_Bombadier-Sheet_4: 214010815
-      Kurmis_Bombadier-Sheet_5: -472400609
-      Kurmis_Bombadier-Sheet_6: 410005337
-      Kurmis_Bombadier-Sheet_7: 1603424588
-      Kurmis_Bombadier-Sheet_8: -1810882511
-      Kurmis_Bombadier-Sheet_9: 386976714
+      Outlaw Mole sheet-Sheet_0: -178663377754705748
+      Outlaw Mole sheet-Sheet_1: -705751232
+      Outlaw Mole sheet-Sheet_10: 2005715650
+      Outlaw Mole sheet-Sheet_11: 1414998252
+      Outlaw Mole sheet-Sheet_12: -128655635
+      Outlaw Mole sheet-Sheet_13: 492368570
+      Outlaw Mole sheet-Sheet_14: -451381490
+      Outlaw Mole sheet-Sheet_15: 729101730
+      Outlaw Mole sheet-Sheet_16: -212655646
+      Outlaw Mole sheet-Sheet_17: -572799468
+      Outlaw Mole sheet-Sheet_18: 2029095282
+      Outlaw Mole sheet-Sheet_19: 1358657964
+      Outlaw Mole sheet-Sheet_2: 984181965
+      Outlaw Mole sheet-Sheet_20: 1610140588
+      Outlaw Mole sheet-Sheet_21: 2133075828
+      Outlaw Mole sheet-Sheet_3: -1793159476
+      Outlaw Mole sheet-Sheet_4: -638785361
+      Outlaw Mole sheet-Sheet_5: 1895938469
+      Outlaw Mole sheet-Sheet_6: -2120419344
+      Outlaw Mole sheet-Sheet_7: -1572487741
+      Outlaw Mole sheet-Sheet_8: -594431384
+      Outlaw Mole sheet-Sheet_9: 431710688
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
