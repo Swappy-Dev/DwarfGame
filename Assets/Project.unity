@@ -111711,6 +111711,7 @@ MonoBehaviour:
   attackRange: 0.6
   attackDamage: 1
   attackRate: 2
+  knockbackStrength: 7
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128

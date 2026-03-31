@@ -34,6 +34,7 @@ public class CavernGhostAI : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
+    private EnemyKnockback knockbackComponent; // NEW
 
     void Start()
     {
@@ -41,6 +42,7 @@ public class CavernGhostAI : MonoBehaviour
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
+        knockbackComponent = GetComponent<EnemyKnockback>(); // NEW
 
         rb.gravityScale = 0;
         rb.freezeRotation = true;
@@ -51,6 +53,9 @@ public class CavernGhostAI : MonoBehaviour
 
     void Update()
     {
+        // NEW: If knockback is occurring, immediately cancel updating AI movement
+        if (knockbackComponent != null && knockbackComponent.IsBeingKnockedBack) return;
+
         if (player == null || isBusy) return;
 
         float dist = Vector2.Distance(transform.position, player.position);
@@ -117,6 +122,13 @@ public class CavernGhostAI : MonoBehaviour
 
         while (Time.time < startTime + dashDuration)
         {
+            // NEW: Pause dash velocity if hit mid-air
+            if (knockbackComponent != null && knockbackComponent.IsBeingKnockedBack)
+            {
+                yield return null;
+                continue;
+            }
+
             rb.linearVelocity = dashDir * dashSpeed;
 
             // SPAWN TRAIL
@@ -155,22 +167,19 @@ public class CavernGhostAI : MonoBehaviour
 
     void CreateAfterimage()
     {
-        // Create the object
         GameObject trailObj = new GameObject("GhostTrail_Instance");
         trailObj.transform.position = transform.position;
         trailObj.transform.localScale = transform.localScale;
         trailObj.transform.rotation = transform.rotation;
 
-        // Add and setup SpriteRenderer
         SpriteRenderer tr = trailObj.AddComponent<SpriteRenderer>();
-        tr.sprite = spriteRenderer.sprite; // Capture current frame
+        tr.sprite = spriteRenderer.sprite;
         tr.color = ghostColor;
         tr.sortingLayerID = spriteRenderer.sortingLayerID;
-        tr.sortingOrder = spriteRenderer.sortingOrder - 1; // Just behind the ghost
+        tr.sortingOrder = spriteRenderer.sortingOrder - 1;
 
-        // Fade it out
         StartCoroutine(FadeTrail(tr));
-        Destroy(trailObj, 1f); // Cleanup safeguard
+        Destroy(trailObj, 1f);
     }
 
     IEnumerator FadeTrail(SpriteRenderer tr)

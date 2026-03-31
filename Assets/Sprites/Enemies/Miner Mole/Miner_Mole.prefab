@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3688978970993703102}
   - component: {fileID: 2438527123094990887}
   - component: {fileID: 191990121193890894}
+  - component: {fileID: -6699085784549688321}
   m_Layer: 7
   m_Name: Miner_Mole
   m_TagString: Untagged
@@ -281,3 +282,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 0.21095562}
   m_EdgeRadius: 0
+--- !u!114 &-6699085784549688321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298074996856113733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a278bf6b12fd49c4e80198119c518281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyKnockback
+  knockbackTime: 1
