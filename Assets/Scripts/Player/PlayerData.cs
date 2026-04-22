@@ -18,6 +18,10 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        invincibilityTimer = 0f; // ADD this - clears any leftover i-frames
+
+        OnPlayerDamaged = null;
+        OnPlayerDeath = null;
     }
 
     // --- NEW: This allows the Dash script to trigger I-Frames ---
@@ -32,6 +36,12 @@ public class PlayerData : MonoBehaviour
         {
             invincibilityTimer -= Time.deltaTime;
         }
+    }
+
+    public static void ClearEvents()
+    {
+        
+        OnPlayerDeath = null;
     }
 
     public void TakeDamage(int damage)
@@ -55,6 +65,8 @@ public class PlayerData : MonoBehaviour
             currentHealth = 0;
             Debug.Log("You're dead");
             OnPlayerDeath?.Invoke();
+
+            GetComponent<PlayerDeathHandler>()?.HandleDeath();
         }
     }
 }

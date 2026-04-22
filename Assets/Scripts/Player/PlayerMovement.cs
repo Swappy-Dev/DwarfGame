@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movementInput;
     public float knockbackTimer = 0f;
 
+    public bool isDead = false; // ADD this field
+
     // --- NEW: Reference to the Dash script ---
     private PlayerDash playerDash;
 
@@ -31,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        if (isDead) return; // ADD this
+        if (playerDash != null && playerDash.isDashing) return;
+
         // --- NEW: Prevent walking if we are currently dashing ---
         if (playerDash != null && playerDash.isDashing) return;
 
@@ -72,6 +78,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+
+        if (isDead) return; // ADD this
+        if (playerDash != null && playerDash.isDashing) return;
+        UpdateAnimations();
+
+
         // --- NEW: Don't update "Walking" animations if we are dashing ---
         if (playerDash != null && playerDash.isDashing) return;
 
