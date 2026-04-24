@@ -143,6 +143,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BreakObject
   hitsToBreak: 1
   breakOnStep: 1
-  brokenSprite: {fileID: 4705361366138081196, guid: c224fe3ee8658e6438f0d14d24d4fbdf, type: 3}
+  brokenSprite: {fileID: -6646328937644075014, guid: 6444209f1c40d8d4ba9071e26133c8ac, type: 3}
   shakeIntensity: 0.1
   shakeDuration: 0.1
