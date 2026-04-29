@@ -1,5 +1,5 @@
-using UnityEngine;
-using UnityEngine.InputSystem; // Add this!
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MenuController : MonoBehaviour
 {
@@ -8,6 +8,7 @@ public class MenuController : MonoBehaviour
     void Start()
     {
         menuCanvas.SetActive(false);
+        SetCursorState(false);
     }
 
     void Update()
@@ -15,7 +16,16 @@ public class MenuController : MonoBehaviour
         // Using the New Input System's "Quick Check" syntax
         if (Keyboard.current.escapeKey.wasReleasedThisFrame)
         {
-            menuCanvas.SetActive(!menuCanvas.activeSelf);
+            bool isOpening = !menuCanvas.activeSelf;
+            menuCanvas.SetActive(isOpening);
+
+            // Jei meniu atidarytas -> rodyti pelę. Jei uždarytas -> paslėpti.
+            SetCursorState(isOpening);
         }
+    }
+
+    void SetCursorState(bool visible)
+    {
+        Cursor.visible = visible;
     }
 }

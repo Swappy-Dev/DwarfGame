@@ -10,6 +10,16 @@ public class CrosshairScript : MonoBehaviour
 
     void LateUpdate()
     {
+        // Jei tikroji pelė yra matoma (inventorius atidarytas), 
+        // paslepiame savo crosshair objektą ir nieko nebevykdome.
+        if (Cursor.visible)
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+            return;
+        }
+
+        GetComponent<SpriteRenderer>().enabled = true;
+
         if (Mouse.current == null || Camera.main == null) return;
 
         Vector2 mousePos = Mouse.current.position.ReadValue();
