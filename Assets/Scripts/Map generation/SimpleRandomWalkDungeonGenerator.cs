@@ -10,6 +10,9 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
     [SerializeField]
     protected SimpleRandomWalkSO randomWalkParameters;
 
+    [SerializeField]
+    protected SimpleRandomWalkSO bossRoomParameters;
+
 
     protected override void RunProceduralGeneration()
     {
@@ -23,11 +26,11 @@ public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
     {
         var currentPosition = position;
         HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
-        for (int i = 0; i < randomWalkParameters.iterations; i++)
+        for (int i = 0; i < parameters.iterations; i++)
         {
-            var path = ProceduralGenerationAlgorithm.SimpleRandomsWalk(currentPosition, randomWalkParameters.walkLength);
+            var path = ProceduralGenerationAlgorithm.SimpleRandomsWalk(currentPosition, parameters.walkLength);
             floorPositions.UnionWith(path);
-            if (randomWalkParameters.startRandomlyEachGeneration)
+            if (parameters.startRandomlyEachGeneration)
                 currentPosition = floorPositions.ElementAt(Random.Range(0, floorPositions.Count));
         }
         return floorPositions;

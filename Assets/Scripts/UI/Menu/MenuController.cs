@@ -13,14 +13,19 @@ public class MenuController : MonoBehaviour
 
     void Update()
     {
-        // Using the New Input System's "Quick Check" syntax
+        // Jei žaidimas sustabdytas (pvz., žaidėjas mirė), meniu atidaryti negalima
+        if (Time.timeScale == 0f && !menuCanvas.activeSelf) return;
+
+        // Naudojame New Input System
         if (Keyboard.current.escapeKey.wasReleasedThisFrame)
         {
             bool isOpening = !menuCanvas.activeSelf;
             menuCanvas.SetActive(isOpening);
 
-            // Jei meniu atidarytas -> rodyti pelę. Jei uždarytas -> paslėpti.
             SetCursorState(isOpening);
+
+            // Pasirinktinai: sustabdomas/paleidžiamas laikas atidarius meniu žaidimo metu
+            // Time.timeScale = isOpening ? 0f : 1f;
         }
     }
 

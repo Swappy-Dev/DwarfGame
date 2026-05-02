@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -46,6 +46,9 @@ public class PlayerDeathHandler : MonoBehaviour
 
         // 4. Pause the game
         Time.timeScale = 0f;
+
+
+        Cursor.visible = true;
     }
 
     // Call this from your "Restart" button in the UI
