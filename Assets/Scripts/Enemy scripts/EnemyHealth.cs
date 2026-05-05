@@ -6,12 +6,9 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth = 3;
     private int currentHealth;
 
-
     [Header("Effects")]
-
     public GameObject deathEffect;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentHealth = maxHealth;
@@ -20,6 +17,9 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        DamagePopupManager.Instance.Show(damage, transform.position + Vector3.up);
+
         if (currentHealth <= 0)
         {
             Die();
@@ -35,16 +35,12 @@ public class EnemyHealth : MonoBehaviour
             Instantiate(deathEffect, transform.position, Quaternion.identity);
         }
 
-        // Sunaikiname kirtiklį, jei toks yra
         MoleAI moleAI = GetComponent<MoleAI>();
         if (moleAI != null && moleAI.activePickaxe != null)
         {
             Destroy(moleAI.activePickaxe);
         }
 
-        // TEISINGAS PAKEITIMAS:
-        // Naikiname tik šį konkretų priešą, o ne jo tėvą (generatorių)
         Destroy(gameObject);
     }
-
 }

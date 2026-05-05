@@ -1039,7 +1039,7 @@ MonoBehaviour:
   bossRoomParameters: {fileID: 11400000, guid: 1df751e0bf88b7048a4c536f903c22e1, type: 2}
   corridorLength: 20
   corridorCount: 20
-  roomPercent: 0.81
+  roomPercent: 0.719
   objectGenerator: {fileID: 1974108244}
   player: {fileID: 1563114531}
   bossCorridorLength: 30
@@ -45343,7 +45343,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 570c6aa0535c3a241809c206f938abb6, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.233
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -45437,6 +45437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 999189888}
   - component: {fileID: 999189887}
+  - component: {fileID: 999189889}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -45477,6 +45478,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &999189889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999189886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a03d0b6008ca44e9d1edca28560c13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamagePopupManager
+  popupPrefab: {fileID: 519947602356171014, guid: 94ecb650deac22b4f918a8a318ed95e0, type: 3}
 --- !u!1 &1002234132
 GameObject:
   m_ObjectHideFlags: 0
@@ -61589,7 +61603,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 2947699324198455195, guid: 6278f9f63daa86f48ad1c59870070030, type: 3}
+  m_Sprite: {fileID: -5651292620954170857, guid: 9caa4e1facc767c4ab93b9e8edd0c00e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -61777,7 +61791,7 @@ MonoBehaviour:
   crosshair: {fileID: 0}
   attackDistance: 1.2
   attackRange: 0.6
-  attackDamage: 1
+  attackDamage: 2
   attackRate: 2
   knockbackStrength: 7
   enemyLayers:
