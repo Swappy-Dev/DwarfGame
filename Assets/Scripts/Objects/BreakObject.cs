@@ -78,6 +78,8 @@ public class BreakObject : MonoBehaviour
         {
             col.enabled = false;
         }
+
+        OnBreak();
     }
 
     private IEnumerator Shake()
@@ -92,5 +94,10 @@ public class BreakObject : MonoBehaviour
             yield return null;
         }
         transform.position = originalPosition;
+    }
+
+    protected virtual void OnBreak()
+    {
+        // Bazinė klasė nieko nedaro - subklasės override'ina
     }
 }
