@@ -6,6 +6,18 @@ public class ObjectGenerator : MonoBehaviour
     [SerializeField] private List<ObjectData> objectsToPlace;
     private List<GameObject> spawnedObjects = new List<GameObject>();
 
+    [SerializeField] private ObjectData bossData;
+
+    public void PlaceBoss(Vector2Int position)
+    {
+        if (bossData != null && bossData.prefab != null)
+        {
+            Vector3 worldPos = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
+            GameObject boss = Instantiate(bossData.prefab, worldPos, Quaternion.identity, transform);
+            spawnedObjects.Add(boss);
+        }
+    }
+
     public void PlaceObjects(HashSet<Vector2Int> roomPositions, HashSet<Vector2Int> corridorPositions, HashSet<Vector2Int> spawnRoomPositions)
     {
         ClearObjects();

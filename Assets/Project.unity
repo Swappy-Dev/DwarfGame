@@ -865,7 +865,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 3
+  m_PointLightOuterRadius: 20
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -63057,6 +63057,11 @@ MonoBehaviour:
     placementProbability: 0.005
     placeInRoomsOnly: 1
     isEnemy: 0
+  bossData:
+    prefab: {fileID: 5488786567494760561, guid: 0db6b9df09ca9e54c80b26c539a6c686, type: 3}
+    placementProbability: 1
+    placeInRoomsOnly: 1
+    isEnemy: 1
 --- !u!4 &1974108245
 Transform:
   m_ObjectHideFlags: 0

@@ -19,7 +19,9 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     [SerializeField]
     private int bossCorridorLength = 8;
 
-    
+    private Vector2Int bossRoomCenterPoint;
+
+
 
 
     private void Start()
@@ -102,7 +104,11 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         {
             // Perduodami roomsForObjects, kuriuose nėra boso kambario plytelių
             objectGenerator.PlaceObjects(roomsForObjects, corridorPositionsOnly, spawnRoomFloor);
+
+            objectGenerator.PlaceBoss(bossRoomCenterPoint);
         }
+
+
 
         // Perkeliame žaidėją
         if (player != null)
@@ -169,6 +175,7 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
                 if (!isOverlapping)
                 {
                     bestBossRoomCenter = candidateRoomCenter;
+                    this.bossRoomCenterPoint = bestBossRoomCenter;
                     bestBossCorridor = testCorridor;
                     validSpotFound = true;
                     potentialRoomPositions.Remove(candidateStart);
@@ -197,6 +204,7 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
                 bestBossCorridor.Add(currentPos);
             }
             bestBossRoomCenter = bestBossCorridor[bestBossCorridor.Count - 1];
+            this.bossRoomCenterPoint = bestBossRoomCenter;
         }
 
         corridorPositionsOnly.UnionWith(bestBossCorridor);

@@ -4,7 +4,7 @@ public class EnemyHealth : MonoBehaviour
 {
     [Header("Health Settings")]
     public int maxHealth = 3;
-    private int currentHealth;
+    public int currentHealth;
 
     [Header("Effects")]
     public GameObject deathEffect;
