@@ -8,13 +8,11 @@ public class PlayerAttack : MonoBehaviour
     [Header("Attack Settings")]
     public Transform attackPoint;
     public Transform crosshair;
-
     public float attackDistance = 1.2f;
     public float attackRange = 0.6f;
     public int attackDamage = 1;
     public float attackRate = 2f;
-    public float knockbackStrength = 7f; // <--- NEW: Controls how far enemies fly
-
+    public float knockbackStrength = 7f;
     private float nextAttackTime = 0f;
 
     [Header("Enemy Targeting")]
@@ -57,14 +55,7 @@ public class PlayerAttack : MonoBehaviour
             crosshair.position = new Vector3(attackPoint.position.x, attackPoint.position.y, -1f);
         }
 
-        if (clampedOffset.x < -0.1f)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else if (clampedOffset.x > 0.1f)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
+        // Removed scale flipping — animations handle facing direction now
     }
 
     void Attack()
@@ -75,23 +66,18 @@ public class PlayerAttack : MonoBehaviour
         {
             if (!collider.isTrigger) continue;
 
-            // 1. Handle Damage
             EnemyHealth enemyHealth = collider.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(attackDamage);
             }
 
-            // 2. Handle Knockback (NEW PART)
-            // We only look for the knockback script on things hit in the enemyLayers
             EnemyKnockback knockback = collider.GetComponent<EnemyKnockback>();
             if (knockback != null)
             {
-                // We pass our position so the enemy flies AWAY from us
                 knockback.ApplyKnockback(transform.position, knockbackStrength);
             }
 
-            // 3. Handle Breakables
             BreakObject breakable = collider.GetComponent<BreakObject>();
             if (breakable != null)
             {

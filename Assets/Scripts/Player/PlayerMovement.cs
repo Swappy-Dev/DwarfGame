@@ -8,36 +8,37 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private InputActionReference moveActionReference;
+    [SerializeField] private Animator animator;
 
     private Rigidbody2D rb;
     private Vector2 movementInput;
+    private Vector2 facingDirection = Vector2.right;
+
     public float knockbackTimer = 0f;
+    public bool isDead = false;
 
-    public bool isDead = false; // ADD this field
-
-    // --- NEW: Reference to the Dash script ---
     private PlayerDash playerDash;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        // --- NEW: Get the dash component ---
         playerDash = GetComponent<PlayerDash>();
     }
 
-    // --- NEW: Public function so PlayerDash can see which way we are moving ---
     public Vector2 GetMovementInput()
     {
         return movementInput;
     }
 
+    public void SetFacingDirection(Vector2 dir)
+    {
+        if (dir.sqrMagnitude > 0.01f)
+            facingDirection = dir.normalized;
+    }
+
     private void FixedUpdate()
     {
-
-        if (isDead) return; // ADD this
-        if (playerDash != null && playerDash.isDashing) return;
-
-        // --- NEW: Prevent walking if we are currently dashing ---
+        if (isDead) return;
         if (playerDash != null && playerDash.isDashing) return;
 
         if (knockbackTimer > 0)
@@ -74,17 +75,9 @@ public class PlayerMovement : MonoBehaviour
         movementInput = Vector2.zero;
     }
 
-    [SerializeField] private Animator animator;
-
     private void Update()
     {
-
-        if (isDead) return; // ADD this
-        if (playerDash != null && playerDash.isDashing) return;
-        UpdateAnimations();
-
-
-        // --- NEW: Don't update "Walking" animations if we are dashing ---
+        if (isDead) return;
         if (playerDash != null && playerDash.isDashing) return;
 
         UpdateAnimations();
@@ -99,9 +92,21 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("IsWalkingUp", false);
         animator.SetBool("IsWalkingDown", false);
 
-        if (movementInput.x > 0.1f) animator.SetBool("IsWalkingRight", true);
-        else if (movementInput.x < -0.1f) animator.SetBool("IsWalkingLeft", true);
-        else if (movementInput.y > 0.1f) animator.SetBool("IsWalkingUp", true);
-        else if (movementInput.y < -0.1f) animator.SetBool("IsWalkingDown", true);
+        bool isMoving = movementInput.sqrMagnitude > 0.01f;
+
+        // Walking → movement direction drives animation
+        // Idle    → crosshair/facing direction drives animation
+        Vector2 directionToUse = isMoving ? movementInput : facingDirection;
+
+        if (Mathf.Abs(directionToUse.x) >= Mathf.Abs(directionToUse.y))
+        {
+            if (directionToUse.x > 0) animator.SetBool("IsWalkingRight", true);
+            else animator.SetBool("IsWalkingLeft", true);
+        }
+        else
+        {
+            if (directionToUse.y > 0) animator.SetBool("IsWalkingUp", true);
+            else animator.SetBool("IsWalkingDown", true);
+        }
     }
 }
