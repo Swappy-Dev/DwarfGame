@@ -841,7 +841,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 1, g: 0.91116536, b: 0.6094339, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -865,7 +865,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 20
+  m_PointLightOuterRadius: 50
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -2043,7 +2043,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8336c5819a15f97438a9a6fef968601b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -47145,7 +47145,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8336c5819a15f97438a9a6fef968601b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -61150,7 +61150,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8336c5819a15f97438a9a6fef968601b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -61823,9 +61823,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   moveSpeed: 5
   moveActionReference: {fileID: -8852584894438894313, guid: a30dab0a4ab1a3f49a1e7a5eb7fdfab6, type: 3}
+  animator: {fileID: 1563114540}
   knockbackTimer: 0
   isDead: 0
-  animator: {fileID: 1563114540}
 --- !u!114 &1563114538
 MonoBehaviour:
   m_ObjectHideFlags: 0
