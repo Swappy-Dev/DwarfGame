@@ -61975,6 +61975,7 @@ MonoBehaviour:
   animator: {fileID: 1563114540}
   knockbackTimer: 0
   isDead: 0
+  footstepInterval: 0.5
 --- !u!114 &1563114538
 MonoBehaviour:
   m_ObjectHideFlags: 0
