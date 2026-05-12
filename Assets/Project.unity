@@ -865,7 +865,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 50
+  m_PointLightOuterRadius: 25
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -63053,7 +63053,15 @@ MonoBehaviour:
     placementProbability: 0.05
     placeInRoomsOnly: 1
     isEnemy: 0
-  - prefab: {fileID: 1764875731212075687, guid: ccee89ae9610f764caa7f2b290ce5111, type: 3}
+  - prefab: {fileID: 84581020246839918, guid: 44d4751915f68344f94607465f346168, type: 3}
+    placementProbability: 0.005
+    placeInRoomsOnly: 1
+    isEnemy: 0
+  - prefab: {fileID: 2055883172784504481, guid: cead726a46c092841b7f7ca5929dc003, type: 3}
+    placementProbability: 0.005
+    placeInRoomsOnly: 1
+    isEnemy: 0
+  - prefab: {fileID: 3495012409364775904, guid: fb6dc3d675e75c34891bf38054942947, type: 3}
     placementProbability: 0.005
     placeInRoomsOnly: 1
     isEnemy: 0

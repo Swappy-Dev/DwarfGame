@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal; // PRIDĖTA: Reikalinga Light2D valdymui
 
 public class BreakObject : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class BreakObject : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Collider2D objectCollider;
+    private Light2D light2D;          // PRIDĖTA: Kintamasis šviesai saugoti
     private Vector3 originalPosition;
     private int currentHits = 0;
     private bool isBroken = false;
@@ -25,6 +27,9 @@ public class BreakObject : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         objectCollider = GetComponent<Collider2D>();
         originalPosition = transform.position;
+
+        // PRIDĖTA: Surandame Light2D komponentą šiame objekte
+        light2D = GetComponent<Light2D>();
 
         // Maža saugumo patikra: jei pamiršai uždėti Trigger
         if (objectCollider != null && !objectCollider.isTrigger)
@@ -72,13 +77,14 @@ public class BreakObject : MonoBehaviour
         if (brokenSprite != null)
             spriteRenderer.sprite = brokenSprite;
 
-        // Svarbu: išjungiame collider, kad Trigger nebesuveiktų dar kartą
+        // Išjungiame collider, kad Trigger nebesuveiktų dar kartą
         Collider2D[] allColliders = GetComponents<Collider2D>();
         foreach (Collider2D col in allColliders)
         {
             col.enabled = false;
         }
 
+        // --- SVARBU: Iškviečiame šviesos išjungimą ---
         OnBreak();
     }
 
@@ -98,6 +104,10 @@ public class BreakObject : MonoBehaviour
 
     protected virtual void OnBreak()
     {
-        // Bazinė klasė nieko nedaro - subklasės override'ina
+        // PRIDĖTA: Jei objektas turi šviesą, ją išjungiame
+        if (light2D != null)
+        {
+            light2D.enabled = false;
+        }
     }
 }
