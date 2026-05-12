@@ -10,9 +10,9 @@ public class OutlawMoleAI : MonoBehaviour
 
     [Header("Timings (Match your Animation Clip lengths!)")]
     public float attackCooldown = 3f;
-    public float digDownDuration = 0.8f; // Increase this to match the "Dig Down" clip
+    public float digDownDuration = 0.8f;
     public float undergroundTime = 1.5f;
-    public float digUpDuration = 1.0f;   // Increase this to match the "Dig Up" clip
+    public float digUpDuration = 1.0f;
 
     [Header("Combat")]
     public GameObject dynamitePrefab;
@@ -22,6 +22,7 @@ public class OutlawMoleAI : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Collider2D col;
+    private EnemyKnockback knockbackComponent; // NEW
 
     private float nextAttackTime;
     private bool isDigging = false;
@@ -32,6 +33,7 @@ public class OutlawMoleAI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         col = GetComponent<Collider2D>();
+        knockbackComponent = GetComponent<EnemyKnockback>(); // NEW
 
         GameObject p = GameObject.FindGameObjectWithTag("Player");
         if (p != null) player = p.transform;
@@ -39,6 +41,9 @@ public class OutlawMoleAI : MonoBehaviour
 
     void Update()
     {
+        // NEW: If being knocked back, do not execute normal state logic
+        if (knockbackComponent != null && knockbackComponent.IsBeingKnockedBack) return;
+
         if (player == null || isDigging) return;
 
         float dist = Vector2.Distance(transform.position, player.position);
@@ -79,7 +84,7 @@ public class OutlawMoleAI : MonoBehaviour
 
         // 1. DIG DOWN
         animator.Play("Outlaw_Mole_Dig_Down");
-        yield return new WaitForSeconds(digDownDuration); // Waits for the full animation
+        yield return new WaitForSeconds(digDownDuration);
 
         col.enabled = false;
         spriteRenderer.enabled = false;
@@ -97,9 +102,9 @@ public class OutlawMoleAI : MonoBehaviour
         // 3. DIG UP
         spriteRenderer.enabled = true;
         animator.Play("Outlaw_Mole_Dig_Up");
-        yield return new WaitForSeconds(digUpDuration); // Waits for the full pop-up
+        yield return new WaitForSeconds(digUpDuration);
 
-        // 4. THROW DYNAMITE (Now happens AFTER digging up)
+        // 4. THROW DYNAMITE 
         if (dynamitePrefab != null && player != null)
         {
             GameObject dyn = Instantiate(dynamitePrefab, transform.position, Quaternion.identity);
@@ -112,7 +117,6 @@ public class OutlawMoleAI : MonoBehaviour
 
     void FlipSprite()
     {
-        // FIXED: Changed (-1, -1, 1) to (-1, 1, 1) to stop the upside-down mole!
         if (player.position.x < transform.position.x)
             transform.localScale = new Vector3(1, 1, 1);
         else

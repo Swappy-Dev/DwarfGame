@@ -18,6 +18,7 @@ public class MinerMole : MonoBehaviour
     private Transform player;
     private Rigidbody2D rb;
     private Animator animator;
+    private EnemyKnockback knockbackComponent; // Reference to our knockback script
 
     private enum State { Idle, Moving, Throwing, WaitingForPickaxe, Repositioning }
     private State currentState = State.Idle;
@@ -30,6 +31,7 @@ public class MinerMole : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        knockbackComponent = GetComponent<EnemyKnockback>(); // Link the scripts
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
@@ -40,6 +42,12 @@ public class MinerMole : MonoBehaviour
     void Update()
     {
         if (player == null) return;
+
+        // --- KNOCKBACK CHECK ---
+        // If we are being shoved, stop all AI logic immediately
+        if (knockbackComponent != null && knockbackComponent.IsBeingKnockedBack)
+            return;
+
         float dist = Vector2.Distance(transform.position, player.position);
 
         switch (currentState)
@@ -63,6 +71,11 @@ public class MinerMole : MonoBehaviour
 
     void FixedUpdate()
     {
+        // --- KNOCKBACK CHECK ---
+        // If being knocked back, do NOT let the AI touch the Rigidbody velocity
+        if (knockbackComponent != null && knockbackComponent.IsBeingKnockedBack)
+            return;
+
         if (player == null || currentState == State.Throwing || currentState == State.WaitingForPickaxe)
         {
             rb.linearVelocity = Vector2.zero;
@@ -72,7 +85,6 @@ public class MinerMole : MonoBehaviour
         Vector2 target = (currentState == State.Moving) ? (Vector2)player.position : randomRepositionSpot;
         Vector2 dir = (target - (Vector2)transform.position).normalized;
 
-        // Deadzone check to prevent jitter when "arriving" at target
         if (Vector2.Distance(transform.position, target) > 0.3f)
         {
             FlipSprite(dir.x);
@@ -108,7 +120,6 @@ public class MinerMole : MonoBehaviour
 
     private void ApplyMovementWithAvoidance(Vector2 dir)
     {
-        // CircleCast detects "thickness" to keep the mole from getting stuck in corners
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.4f, dir, wallAvoidanceDistance, obstacleLayer);
         if (hit.collider != null)
         {
@@ -129,7 +140,6 @@ public class MinerMole : MonoBehaviour
 
     private void FlipSprite(float x)
     {
-        // Deadzone for flipping to prevent rapid-fire rotation swapping
         if (Mathf.Abs(x) > 0.2f)
         {
             transform.localScale = new Vector3(x < 0 ? 1 : -1, 1, 1);

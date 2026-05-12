@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 3436802557305077999}
   - component: {fileID: 2472158789248739559}
   - component: {fileID: 4457392243939949645}
-  m_Layer: 6
+  - component: {fileID: 3558835701504630456}
+  m_Layer: 7
   m_Name: Cavern_Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +96,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!95 &7022575164452876105
 Animator:
   serializedVersion: 7
@@ -179,8 +180,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.8, y: 0.8}
+  m_Offset: {x: 0.014196277, y: 0.4764247}
+  m_Size: {x: 0.7716074, y: 0.9519038}
   m_Direction: 0
 --- !u!114 &2472158789248739559
 MonoBehaviour:
@@ -200,7 +201,7 @@ MonoBehaviour:
   stopDistance: 0.9
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   damage: 1
   attackCooldown: 2
   dashSpeed: 12
@@ -223,5 +224,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ada6eda0f6ed1e4db1460931f3219f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 3
+  maxHealth: 5
   deathEffect: {fileID: 0}
+--- !u!114 &3558835701504630456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764875731212075687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a278bf6b12fd49c4e80198119c518281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyKnockback
+  knockbackTime: 0.2
