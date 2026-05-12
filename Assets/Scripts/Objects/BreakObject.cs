@@ -46,6 +46,8 @@ public class BreakObject : MonoBehaviour
         }
         else
         {
+
+            SoundManager.Instance.Play(SoundManager.Instance.miningHit); // <-- PRIDĖK
             // Tik sudrebiname, nes dar liko gyvybių
             StartCoroutine(Shake());
         }
@@ -68,6 +70,7 @@ public class BreakObject : MonoBehaviour
         isBroken = true;
         StopAllCoroutines();
         transform.position = originalPosition;
+        SoundManager.Instance.Play(SoundManager.Instance.miningBreak); // <-- PRIDĖK
 
         if (brokenSprite != null)
             spriteRenderer.sprite = brokenSprite;

@@ -9,6 +9,9 @@ public class GoldPickup : MonoBehaviour
         Debug.Log("GoldPickup touched by: " + collision.gameObject.name);
         if (collision.CompareTag("Player"))
         {
+
+            SoundManager.Instance.Play(SoundManager.Instance.pickupCoin);
+
             PlayerGold playerGold = collision.GetComponent<PlayerGold>();
             if (playerGold != null)
             {

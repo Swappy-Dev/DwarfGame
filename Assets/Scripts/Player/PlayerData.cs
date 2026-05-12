@@ -57,6 +57,8 @@ public class PlayerData : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.Play(SoundManager.Instance.hitHurt);
+
         invincibilityTimer = invincibilityTime;
         currentHealth -= damage;
 
@@ -69,6 +71,7 @@ public class PlayerData : MonoBehaviour
         {
             currentHealth = 0;
             Debug.Log("You're dead");
+            SoundManager.Instance.Play(SoundManager.Instance.death);
             OnPlayerDeath?.Invoke();
 
             GetComponent<PlayerDeathHandler>()?.HandleDeath();

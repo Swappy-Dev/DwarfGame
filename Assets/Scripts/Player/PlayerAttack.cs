@@ -61,6 +61,9 @@ public class PlayerAttack : MonoBehaviour
     void Attack()
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        // Attack() metodo pradžioje:
+        SoundManager.Instance.Play(SoundManager.Instance.swoosh);
+
 
         foreach (Collider2D collider in hitColliders)
         {

@@ -36,11 +36,13 @@ public class PlayerMovement : MonoBehaviour
             facingDirection = dir.normalized;
     }
 
+    private float footstepTimer = 0f;
+    public float footstepInterval = 0.35f;
+
     private void FixedUpdate()
     {
         if (isDead) return;
         if (playerDash != null && playerDash.isDashing) return;
-
         if (knockbackTimer > 0)
         {
             knockbackTimer -= Time.fixedDeltaTime;
@@ -49,6 +51,20 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 movement = movementInput.normalized * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
+
+        if (movementInput != Vector2.zero)
+        {
+            footstepTimer -= Time.fixedDeltaTime;
+            if (footstepTimer <= 0f)
+            {
+                SoundManager.Instance.Play(SoundManager.Instance.footstep, 0.5f);
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
     }
 
     void OnEnable()
