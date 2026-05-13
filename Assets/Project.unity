@@ -841,7 +841,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 1, g: 0.91116536, b: 0.6094339, a: 1}
-  m_Intensity: 2
+  m_Intensity: 5
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -865,7 +865,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 25
+  m_PointLightOuterRadius: 15
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -45091,13 +45091,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30378b46816de54c9ba53f9b628545d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  miningHit: {fileID: 8300000, guid: c3a933d3279ea8048bb254d61d56efec, type: 3}
-  miningBreak: {fileID: 8300000, guid: 5095546fc29d6fe44b291be788a5fabf, type: 3}
-  pickupCoin: {fileID: 8300000, guid: 122a1f77aec64674c8180f62e154ea8c, type: 3}
-  hitHurt: {fileID: 8300000, guid: 2243a7e9233319f4c93ce81a75d82d77, type: 3}
-  death: {fileID: 8300000, guid: 40584c7378863db40a8c390f9df32fce, type: 3}
-  swoosh: {fileID: 8300000, guid: 64b74ad0b54387a4cb36244d61ae25ef, type: 3}
-  footstep: {fileID: 8300000, guid: 20801281ade6d564db36b52ffae1d772, type: 3}
+  sounds:
+  - name: Walking
+    clip: {fileID: 8300000, guid: ad751c3ab022d864a9534d68fb78f434, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: miningHit
+    clip: {fileID: 8300000, guid: c3a933d3279ea8048bb254d61d56efec, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: miningBreak
+    clip: {fileID: 8300000, guid: 5095546fc29d6fe44b291be788a5fabf, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: pickupCoin
+    clip: {fileID: 8300000, guid: 122a1f77aec64674c8180f62e154ea8c, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: hitHurt
+    clip: {fileID: 8300000, guid: 2243a7e9233319f4c93ce81a75d82d77, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: death
+    clip: {fileID: 8300000, guid: 40584c7378863db40a8c390f9df32fce, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Explosion
+    clip: {fileID: 8300000, guid: ef26582587d989245b78c5dc126eacaf, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: swoosh
+    clip: {fileID: 8300000, guid: 64b74ad0b54387a4cb36244d61ae25ef, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
 --- !u!4 &834346008
 Transform:
   m_ObjectHideFlags: 0
@@ -45126,13 +45176,13 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.285
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 161
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -45574,9 +45624,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 570c6aa0535c3a241809c206f938abb6, type: 3}
+  m_Resource: {fileID: 8300000, guid: c2c453facb2999d4c92e5b7f4c1b77d9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.233
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 1
   Mute: 0

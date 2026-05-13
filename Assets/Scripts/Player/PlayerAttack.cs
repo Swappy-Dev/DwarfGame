@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 public class PlayerAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
@@ -14,19 +13,15 @@ public class PlayerAttack : MonoBehaviour
     public float attackRate = 2f;
     public float knockbackStrength = 7f;
     private float nextAttackTime = 0f;
-
     [Header("Enemy Targeting")]
     public LayerMask enemyLayers;
-
     void Start()
     {
         Cursor.visible = false;
     }
-
     void Update()
     {
         AimTowardsMouse();
-
         if (Time.time >= nextAttackTime)
         {
             if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
@@ -36,51 +31,37 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
-
     void AimTowardsMouse()
     {
         if (attackPoint == null || Mouse.current == null || Camera.main == null) return;
-
         Vector2 mouseScreenPosition = Mouse.current.position.ReadValue();
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
         mousePosition.z = 0f;
-
         Vector3 offsetFromPlayer = mousePosition - transform.position;
         Vector3 clampedOffset = Vector3.ClampMagnitude(offsetFromPlayer, attackDistance);
-
         attackPoint.position = transform.position + clampedOffset;
-
         if (crosshair != null)
         {
             crosshair.position = new Vector3(attackPoint.position.x, attackPoint.position.y, -1f);
         }
-
-        // Removed scale flipping — animations handle facing direction now
     }
-
     void Attack()
     {
+        SoundManager.Instance.Play("swoosh");
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        // Attack() metodo pradžioje:
-        SoundManager.Instance.Play(SoundManager.Instance.swoosh);
-
-
         foreach (Collider2D collider in hitColliders)
         {
             if (!collider.isTrigger) continue;
-
             EnemyHealth enemyHealth = collider.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(attackDamage);
             }
-
             EnemyKnockback knockback = collider.GetComponent<EnemyKnockback>();
             if (knockback != null)
             {
                 knockback.ApplyKnockback(transform.position, knockbackStrength);
             }
-
             BreakObject breakable = collider.GetComponent<BreakObject>();
             if (breakable != null)
             {
@@ -88,7 +69,6 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
-
     void OnDrawGizmosSelected()
     {
         if (attackPoint == null) return;
