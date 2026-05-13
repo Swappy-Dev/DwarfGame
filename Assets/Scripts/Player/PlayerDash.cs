@@ -10,7 +10,6 @@ public class PlayerDash : MonoBehaviour
 
     private Rigidbody2D rb;
     private PlayerData playerData;
-    private Camera mainCam;
     private SpriteRenderer spriteRenderer;
 
     [Header("Dash Settings")]
@@ -20,7 +19,7 @@ public class PlayerDash : MonoBehaviour
 
     [Header("Afterimage Settings")]
     [SerializeField] private float afterimageInterval = 0.05f;
-    [SerializeField] private float afterimageFadeDuration = 0.5f; // Slightly longer for better visibility
+    [SerializeField] private float afterimageFadeDuration = 0.5f;
     [SerializeField] private Color afterimageColor = new Color(1f, 1f, 1f, 0.5f);
 
     private bool canDash = true;
@@ -30,15 +29,8 @@ public class PlayerDash : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerData = GetComponent<PlayerData>();
-        mainCam = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        if (trail != null)
-        {
-            trail.startColor = new Color(trail.startColor.r, trail.startColor.g, trail.startColor.b, 0.4f);
-            trail.endColor = new Color(trail.endColor.r, trail.endColor.g, trail.endColor.b, 0f);
-            trail.emitting = false;
-        }
+        if (trail != null) trail.emitting = false;
     }
 
     private void OnEnable()
@@ -61,10 +53,7 @@ public class PlayerDash : MonoBehaviour
 
     private void OnDashPerformed(InputAction.CallbackContext context)
     {
-        if (canDash && !isDashing)
-        {
-            StartCoroutine(PerformDash());
-        }
+        if (canDash && !isDashing) StartCoroutine(PerformDash());
     }
 
     private IEnumerator PerformDash()
@@ -72,29 +61,20 @@ public class PlayerDash : MonoBehaviour
         canDash = false;
         isDashing = true;
 
-        if (SoundManager.Instance != null)
-            SoundManager.Instance.Play("Dash");
-
-        if (trail != null)
-            trail.emitting = true;
+        if (SoundManager.Instance != null) SoundManager.Instance.Play("Dash");
+        if (trail != null) trail.emitting = true;
 
         Vector2 dashDir = GetMouseDirection();
-
-        if (playerData != null)
-            playerData.SetInvincibility(dashDuration);
+        if (playerData != null) playerData.SetInvincibility(dashDuration);
 
         rb.linearVelocity = dashDir * dashPower;
-
-        // Start the ghost effect loop
         StartCoroutine(SpawnAfterimages());
 
         yield return new WaitForSeconds(dashDuration);
 
         isDashing = false;
         rb.linearVelocity = Vector2.zero;
-
-        if (trail != null)
-            trail.emitting = false;
+        if (trail != null) trail.emitting = false;
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
@@ -113,50 +93,25 @@ public class PlayerDash : MonoBehaviour
     {
         if (spriteRenderer == null) return;
 
-        // Create the ghost object
         GameObject ghost = new GameObject("Afterimage");
-        ghost.transform.position = transform.position;
+        ghost.transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         ghost.transform.rotation = transform.rotation;
         ghost.transform.localScale = transform.localScale;
 
-        // Add and configure SpriteRenderer
-        SpriteRenderer ghostRenderer = ghost.AddComponent<SpriteRenderer>();
-
-        // CRITICAL FIX: Explicitly assign material and sprite
-        ghostRenderer.sprite = spriteRenderer.sprite;
-        ghostRenderer.material = spriteRenderer.material;
-
-        ghostRenderer.sortingLayerID = spriteRenderer.sortingLayerID;
-        ghostRenderer.sortingOrder = spriteRenderer.sortingOrder - 1;
-        ghostRenderer.color = afterimageColor;
-
-        // Handle the fade out
-        StartCoroutine(FadeAfterimage(ghostRenderer));
-    }
-
-    private IEnumerator FadeAfterimage(SpriteRenderer ghostRenderer)
-    {
-        float elapsed = 0f;
-        Color startColor = ghostRenderer.color;
-
-        while (elapsed < afterimageFadeDuration)
-        {
-            if (ghostRenderer == null) yield break; // Safety check if destroyed early
-
-            elapsed += Time.deltaTime;
-            float alpha = Mathf.Lerp(startColor.a, 0f, elapsed / afterimageFadeDuration);
-            ghostRenderer.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-            yield return null;
-        }
-
-        if (ghostRenderer != null)
-            Destroy(ghostRenderer.gameObject);
+        // AfterimageGhost is self-contained — it owns its own SpriteRenderer
+        // and fades itself independently of the player object's lifecycle.
+        AfterimageGhost fader = ghost.AddComponent<AfterimageGhost>();
+        fader.Init(spriteRenderer, afterimageColor, afterimageFadeDuration);
     }
 
     private Vector2 GetMouseDirection()
     {
-        Vector3 mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Camera cam = Camera.main;
+        if (cam == null) return Vector2.right;
+
+        Vector3 mousePos = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         mousePos.z = 0;
-        return (mousePos - transform.position).normalized;
+        Vector2 direction = (mousePos - transform.position).normalized;
+        return direction == Vector2.zero ? Vector2.right : direction;
     }
 }
