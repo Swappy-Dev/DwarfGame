@@ -45099,16 +45099,16 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - name: miningHit
-    clip: {fileID: 8300000, guid: c3a933d3279ea8048bb254d61d56efec, type: 3}
+  - name: PickaxeHit
+    clip: {fileID: 8300000, guid: 46281ac551d7ac04f9a9149e0dada259, type: 3}
     volume: 0.4
     pitch: 1
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - name: miningBreak
+  - name: PickaxeBreak
     clip: {fileID: 8300000, guid: 5095546fc29d6fe44b291be788a5fabf, type: 3}
-    volume: 0.4
+    volume: 0.6
     pitch: 1
     loop: 0
     playOnAwake: 0
@@ -45120,7 +45120,7 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - name: hitHurt
+  - name: Hurt
     clip: {fileID: 8300000, guid: 2243a7e9233319f4c93ce81a75d82d77, type: 3}
     volume: 0.5
     pitch: 1
@@ -45136,14 +45136,21 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Explosion
     clip: {fileID: 8300000, guid: ef26582587d989245b78c5dc126eacaf, type: 3}
-    volume: 0.25
+    volume: 0.4
     pitch: 1
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - name: swoosh
-    clip: {fileID: 8300000, guid: 64b74ad0b54387a4cb36244d61ae25ef, type: 3}
+  - name: Swing
+    clip: {fileID: 8300000, guid: fcc735ec928e1934793ad63bd86d5e76, type: 3}
     volume: 0.4
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 8300000, guid: 47a3cf66e2e27c944a060d08f0d59c5c, type: 3}
+    volume: 0.5
     pitch: 1
     loop: 0
     playOnAwake: 0
@@ -63250,7 +63257,7 @@ MonoBehaviour:
     placeInRoomsOnly: 1
     isEnemy: 0
   - prefab: {fileID: 8894913228478848492, guid: 334289f18e7f15c47959c49085722b7f, type: 3}
-    placementProbability: 0.05
+    placementProbability: 0.025
     placeInRoomsOnly: 1
     isEnemy: 0
   - prefab: {fileID: 84581020246839918, guid: 44d4751915f68344f94607465f346168, type: 3}

@@ -38,7 +38,7 @@ public class BreakObject : MonoBehaviour
         }
         else
         {
-            SoundManager.Instance.Play("miningHit");
+            SoundManager.Instance.Play("PickaxeHit");
             StartCoroutine(Shake());
         }
     }
@@ -55,7 +55,7 @@ public class BreakObject : MonoBehaviour
         isBroken = true;
         StopAllCoroutines();
         transform.position = originalPosition;
-        SoundManager.Instance.Play("miningBreak");
+        SoundManager.Instance.Play("PickaxeBreak");
         if (brokenSprite != null)
             spriteRenderer.sprite = brokenSprite;
         Collider2D[] allColliders = GetComponents<Collider2D>();

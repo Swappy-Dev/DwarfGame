@@ -47,7 +47,7 @@ public class PlayerAttack : MonoBehaviour
     }
     void Attack()
     {
-        SoundManager.Instance.Play("swoosh");
+        SoundManager.Instance.Play("Swing");
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D collider in hitColliders)
         {
