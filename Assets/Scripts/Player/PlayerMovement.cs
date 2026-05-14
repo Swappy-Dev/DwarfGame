@@ -18,6 +18,12 @@ public class PlayerMovement : MonoBehaviour
     private bool hasPickaxe = false;
     public bool HasPickaxe => hasPickaxe;
 
+    private bool isAttacking = false;
+    public bool IsAttacking => isAttacking;
+
+    private float attackTimeoutTimer = 0f;
+    private const float ATTACK_TIMEOUT = 1.5f;
+
     private float footstepTimer = 0f;
     public float footstepInterval = 0.35f;
 
@@ -37,9 +43,27 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void TriggerAttackAnimation()
+{
+    if (animator != null)
     {
-        if (animator != null)
-            animator.SetTrigger("Attack");
+        isAttacking = true;
+        attackTimeoutTimer = ATTACK_TIMEOUT;
+
+        // Clear all direction bools so Any State can't fire walk/idle transitions
+        animator.SetBool("IsWalkingRight", false);
+        animator.SetBool("IsWalkingLeft", false);
+        animator.SetBool("IsWalkingUp", false);
+        animator.SetBool("IsWalkingDown", false);
+        animator.SetBool("IsIdle", false);
+
+        animator.SetTrigger("Attack");
+    }
+}
+
+    public void OnAttackEnd()
+    {
+        isAttacking = false;
+        attackTimeoutTimer = 0f;
     }
 
     void OnEnable()
@@ -67,9 +91,22 @@ public class PlayerMovement : MonoBehaviour
         if (isDead) return;
         if (playerDash != null && playerDash.isDashing) return;
 
-        // Toggle pickaxe with E
+        if (isAttacking)
+        {
+            attackTimeoutTimer -= Time.deltaTime;
+            if (attackTimeoutTimer <= 0f)
+            {
+                isAttacking = false;
+                animator.ResetTrigger("Attack");
+            }
+        }
+
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
+            isAttacking = false;
+            attackTimeoutTimer = 0f;
+            animator.ResetTrigger("Attack");
+
             hasPickaxe = !hasPickaxe;
             animator.SetBool("HasPickaxe", hasPickaxe);
         }
@@ -87,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        // Full movement allowed even during attack
         Vector2 movement = movementInput.normalized * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
 
@@ -108,15 +146,13 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateAnimations()
     {
         if (animator == null) return;
-
-        // Don't interrupt attack animations
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.IsTag("Attack")) return;
+        if (isAttacking) return;
 
         bool isMoving = movementInput.sqrMagnitude > 0.01f;
         Vector2 directionToUse = isMoving ? movementInput : facingDirection;
 
         animator.SetBool("IsIdle", !isMoving);
+
         animator.SetBool("IsWalkingRight", false);
         animator.SetBool("IsWalkingLeft", false);
         animator.SetBool("IsWalkingUp", false);

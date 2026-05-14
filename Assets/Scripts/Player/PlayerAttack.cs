@@ -29,8 +29,8 @@ public class PlayerAttack : MonoBehaviour
     {
         AimTowardsMouse();
 
-        // Block attack entirely if no pickaxe
         if (playerMovement == null || !playerMovement.HasPickaxe) return;
+        if (playerMovement.IsAttacking) return;
 
         if (Time.time >= nextAttackTime)
         {
@@ -60,13 +60,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
-        // Trigger attack animation
         playerMovement.TriggerAttackAnimation();
 
-        // Play swing sound
         SoundManager.Instance.Play("Swing");
 
-        // Hit detection
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D collider in hitColliders)
         {
