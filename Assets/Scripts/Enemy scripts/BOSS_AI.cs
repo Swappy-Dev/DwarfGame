@@ -4,8 +4,6 @@ using System.Collections;
 public class BOSS_AI : MonoBehaviour
 {
     [Header("Boso nustatymai")]
-    public float maxHealth = 100f;
-    private float currentHealth;
     public float phaseTwoThreshold = 0.5f;
 
     [Header("Judėjimas")]
@@ -16,8 +14,6 @@ public class BOSS_AI : MonoBehaviour
 
     [Header("Atakos")]
     public float attackCooldown = 2f;
-    public int projectilesInPhaseTwo = 5;
-    public GameObject projectilePrefab;
 
     private enum BossState { Idle, Chasing, Attacking, Dashing, Stunned, Dead }
     private BossState currentState = BossState.Idle;
@@ -31,12 +27,13 @@ public class BOSS_AI : MonoBehaviour
     private float cooldownTimer;
     private bool isPhaseTwo = false;
 
+    [HideInInspector] public GameObject victoryPanel;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         knockbackComponent = GetComponent<EnemyKnockback>();
-        currentHealth = maxHealth;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
@@ -95,8 +92,6 @@ public class BOSS_AI : MonoBehaviour
         Debug.Log("Bossas puola artimoje kovoje!");
         yield return new WaitForSeconds(0.5f);
 
-        if (isPhaseTwo) ShootProjectiles();
-
         cooldownTimer = attackCooldown;
         if (!isDead) currentState = BossState.Chasing;
     }
@@ -120,27 +115,12 @@ public class BOSS_AI : MonoBehaviour
         if (!isDead) currentState = BossState.Chasing;
     }
 
-    void ShootProjectiles()
+    public void CheckPhaseTransition(float currentHealth, float maxHealth)
     {
-        for (int i = 0; i < projectilesInPhaseTwo; i++)
-        {
-            float angle = i * (360f / projectilesInPhaseTwo);
-            Quaternion rotation = Quaternion.Euler(0, 0, angle);
-            Instantiate(projectilePrefab, transform.position, rotation);
-        }
-    }
-
-    public void TakeDamage(float damage)
-    {
-        if (isDead) return;
-
-        currentHealth -= damage;
-
         if (!isPhaseTwo && currentHealth <= maxHealth * phaseTwoThreshold)
+        {
             StartPhaseTwo();
-
-        if (currentHealth <= 0)
-            Die();
+        }
     }
 
     public void Die()
@@ -148,30 +128,69 @@ public class BOSS_AI : MonoBehaviour
         if (isDead) return;
         isDead = true;
         currentState = BossState.Dead;
+
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;
-        StartCoroutine(ShowVictoryAfterDelay(1.2f));
+
+        // Paslepiam boso vizualus ir išjungiam jo susidūrimus
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null) sr.enabled = false;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        // Sustabdom žaidėją
+        DisablePlayerControl();
+
+        // Paleidžiame iškart pergalės langą
+        StartCoroutine(ShowVictoryAfterDelay(0f));
+    }
+
+    private void DisablePlayerControl()
+    {
+        if (player != null)
+        {
+            // 1. Išjungiam pagrindinį judėjimą
+            PlayerMovement movement = player.GetComponent<PlayerMovement>();
+            if (movement != null) movement.enabled = false;
+
+            // 2. Išjungiam Brūkšnį (Dash)
+            PlayerDash dash = player.GetComponent<PlayerDash>();
+            if (dash != null) dash.enabled = false;
+
+            // 3. Išjungiam Ataką
+            PlayerAttack attack = player.GetComponent<PlayerAttack>();
+            if (attack != null) attack.enabled = false;
+
+            // 4. Sustabdom žaidėjo fiziką
+            Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
+            if (playerRb != null)
+            {
+                playerRb.linearVelocity = Vector2.zero;
+                playerRb.bodyType = RigidbodyType2D.Kinematic;
+            }
+
+            Cursor.visible = true; // Padaro pelę matomą
+
+            Debug.Log("Žaidėjo kontrolė išjungta, pelės žymeklis įjungtas!");
+        }
     }
 
     IEnumerator ShowVictoryAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        // Ieško ir išjungtų objektų per Canvas
-        Canvas canvas = FindFirstObjectByType<Canvas>();
-        Transform panel = canvas.transform.Find("VictoryPanel");
-
-        if (panel != null)
+        if (victoryPanel != null)
         {
-            panel.gameObject.SetActive(true);
-            Debug.Log("VictoryPanel parodytas!");
+            victoryPanel.SetActive(true);
+            Debug.Log("VictoryPanel sėkmingai parodytas per ObjectGenerator!");
         }
         else
         {
-            Debug.LogError("VictoryPanel nerastas Canvas viduje!");
+            Debug.LogError("BOSS_AI negavo VictoryPanel nuorodos iš ObjectGenerator!");
         }
 
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject);
     }
 
     void StartPhaseTwo()

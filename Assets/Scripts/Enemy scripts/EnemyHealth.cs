@@ -9,9 +9,12 @@ public class EnemyHealth : MonoBehaviour
     [Header("Effects")]
     public GameObject deathEffect;
 
+    private BOSS_AI bossAI;
+
     void Start()
     {
         currentHealth = maxHealth;
+        bossAI = GetComponent<BOSS_AI>();
     }
 
     public void TakeDamage(int damage)
@@ -19,6 +22,12 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
 
         DamagePopupManager.Instance.Show(damage, transform.position + Vector3.up);
+
+        
+        if (bossAI != null)
+        {
+            bossAI.CheckPhaseTransition(currentHealth, maxHealth);
+        }
 
         if (currentHealth <= 0)
         {
@@ -40,12 +49,11 @@ public class EnemyHealth : MonoBehaviour
             Destroy(moleAI.activePickaxe);
         }
 
-        // ✅ NAUJAS: jei tai bossas — iškviečiam jo mirties logiką
-        BOSS_AI bossAI = GetComponent<BOSS_AI>();
+        
         if (bossAI != null)
         {
-            bossAI.Die(); // Victory Panel iškviečiamas čia
-            return;       // Destroy paliekam BOSS_AI viduje
+            bossAI.Die();
+            return; 
         }
 
         Destroy(gameObject);

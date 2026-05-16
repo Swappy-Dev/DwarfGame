@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// Šį skriptą pridedam prie VictoryPanel GameObject Unity'je
 public class VictoryPanelManager : MonoBehaviour
 {
     [Header("Mygtukų nuorodos")]
@@ -10,18 +9,14 @@ public class VictoryPanelManager : MonoBehaviour
     public Button mainMenuButton;   // Priskirk Inspector lange
 
     [Header("Scenų pavadinimai")]
-    public string gameSceneName = "GameScene";     // ← Pakeisk į savo žaidimo scenos pavadinimą
-    public string mainMenuSceneName = "MainMenu";  // ← Pakeisk į savo meniu scenos pavadinimą
+    public string gameSceneName = "GameScene";     // Pakeisk į savo žaidimo scenos pavadinimą
+    public string mainMenuSceneName = "MainMenu";  // Pakeisk į savo meniu scenos pavadinimą
 
     void Awake()
     {
-        // Panel turi būti paslėptas nuo pat pradžių
-        gameObject.SetActive(false);
-    }
-
-    void Start()
-    {
-        // Prijungiame mygtukų įvykius
+        // --- SUTVARKYTA ---
+        // Mygtukų klausytojus (Listeners) jungiame Awake funkcijoje.
+        // Tai suveiks net jei objektas išjungiamas iškart po to arba vėliau.
         if (playAgainButton != null)
             playAgainButton.onClick.AddListener(OnPlayAgain);
         else
@@ -31,6 +26,9 @@ public class VictoryPanelManager : MonoBehaviour
             mainMenuButton.onClick.AddListener(OnMainMenu);
         else
             Debug.LogWarning("Main Menu mygtukas nepriskirtas Inspector lange!");
+
+        // Paslepiame panelę pačioje Awake pabaigoje
+        gameObject.SetActive(false);
     }
 
     // Ši funkcija iškviečiama iš BOSS_AI kai bossas miršta
@@ -38,24 +36,24 @@ public class VictoryPanelManager : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        // Pristabdome laiką — žaidėjas mato ekraną ramiai
-        // Jei nenori pristabdyti — šią eilutę ištrink
-        Time.timeScale = 0f;
+        // Kadangi boso skripte sustabdei žaidėją, laiko stabdymas (Time.timeScale = 0f) 
+        // yra nebūtinas, bet jei nori visiškai įšaldyti pasaulį (pvz. animacijas), gali jį palikti:
+        // Time.timeScale = 0f; 
     }
 
     // --- MYGTUKŲ LOGIKA ---
 
     void OnPlayAgain()
     {
-        Debug.Log("Play Again paspaustas!");
+        Debug.Log("Play Again paspaustas! Kraunama scena: " + gameSceneName);
         Time.timeScale = 1f; // Atstatome laiką prieš kraunant sceną
         SceneManager.LoadScene(gameSceneName);
     }
 
     void OnMainMenu()
     {
-        Debug.Log("Main Menu paspaustas!");
-        Time.timeScale = 1f; // Atstatome laiką
+        Debug.Log("Main Menu paspaustas! Kraunama scena: " + mainMenuSceneName);
+        Time.timeScale = 1f; // Svarbu: Atstatome laiką, kad pagrindiniame meniu viskas veiktų
         SceneManager.LoadScene(mainMenuSceneName);
     }
 

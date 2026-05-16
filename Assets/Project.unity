@@ -938,8 +938,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 294413543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.0081996, w: 0.9999664}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47535,8 +47535,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259029191}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.3939998, y: 2.2096899, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -62549,7 +62549,7 @@ Transform:
   m_GameObject: {fileID: 1563114531}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.398, y: 0.692, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -62711,8 +62711,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
+  m_Offset: {x: 0, y: 0.48700455}
+  m_Size: {x: 0.5, y: 0.9740091}
   m_Direction: 0
 --- !u!95 &1563114540
 Animator:
@@ -62773,8 +62773,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: -1}
   m_EdgeRadius: 0.1
   m_Points:
-  - {x: -0.12615678, y: 0.51503146}
-  - {x: 0.16287673, y: 0.5150314}
+  - {x: -0.13916633, y: 1.1021006}
+  - {x: 0.15576242, y: 1.1037581}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -63635,7 +63635,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1744908706}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1744908706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64029,6 +64041,7 @@ MonoBehaviour:
     placementProbability: 1
     placeInRoomsOnly: 1
     isEnemy: 1
+  victoryPanel: {fileID: 1555762629}
 --- !u!4 &1974108245
 Transform:
   m_ObjectHideFlags: 0

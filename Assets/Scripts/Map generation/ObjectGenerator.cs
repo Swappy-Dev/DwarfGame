@@ -8,6 +8,10 @@ public class ObjectGenerator : MonoBehaviour
 
     [SerializeField] private ObjectData bossData;
 
+    // --- NAUJA: Pridedame nuorodą į pergalės panelę generatoriuje ---
+    [Header("UI Kontrolė")]
+    [SerializeField] private GameObject victoryPanel;
+
     public void PlaceBoss(Vector2Int position)
     {
         if (bossData != null && bossData.prefab != null)
@@ -15,6 +19,17 @@ public class ObjectGenerator : MonoBehaviour
             Vector3 worldPos = new Vector3(position.x + 0.5f, position.y + 0.5f, 0);
             GameObject boss = Instantiate(bossData.prefab, worldPos, Quaternion.identity, transform);
             spawnedObjects.Add(boss);
+
+            // --- NAUJA LOGIKA: Perduodame VictoryPanel tiesiai sukurtam bosui ---
+            BOSS_AI bossAI = boss.GetComponent<BOSS_AI>();
+            if (bossAI != null)
+            {
+                bossAI.victoryPanel = victoryPanel;
+            }
+            else
+            {
+                Debug.LogWarning("Bosas buvo sukurtas, bet ant jo nerastas BOSS_AI skriptas!");
+            }
         }
     }
 
@@ -25,7 +40,6 @@ public class ObjectGenerator : MonoBehaviour
         // 1. Generuojame objektus kambariuose
         foreach (var pos in roomPositions)
         {
-            // Tikriname, ar ši plytelė priklauso Spawn kambariui
             bool isInsideSpawn = spawnRoomPositions.Contains(pos);
             TryPlaceObject(pos, true, isInsideSpawn);
         }
@@ -42,8 +56,6 @@ public class ObjectGenerator : MonoBehaviour
         foreach (var objData in objectsToPlace)
         {
             if (objData.placeInRoomsOnly && !isRoom) continue;
-
-            // NAUJA LOGIKA: Jei tai priešas ir mes esame Spawn kambaryje - praleidžiame
             if (objData.isEnemy && isInsideSpawn) continue;
 
             if (UnityEngine.Random.value < objData.placementProbability)
