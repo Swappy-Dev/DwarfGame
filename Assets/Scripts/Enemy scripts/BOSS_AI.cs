@@ -7,21 +7,28 @@ public class BOSS_AI : MonoBehaviour
     public float phaseTwoThreshold = 0.5f;
 
     [Header("Judėjimas")]
-    public float moveSpeed = 2.5f;
     public float dashSpeed = 15f;
     public float chaseRange = 12f;
-    public float attackRange = 2.5f;
 
-    [Header("Atakos")]
+    [Header("Atakos Cooldown")]
     public float attackCooldown = 2f;
 
-    private enum BossState { Idle, Chasing, Attacking, Dashing, Stunned, Dead }
+    [Header("Shockwave Atakos Nustatymai")]
+    public GameObject shockwavePrefab;
+    public float shockwaveChargeTime = 0.6f;
+
+    [Header("Cone Atakos Nustatymai")]
+    public GameObject conePrefab; // Įtempk kūgio formos Prefab'ą Unity Inspektoriuje
+    public float coneChargeTime = 0.5f; // Kiek laiko ruošiasi prieš iššaunant kūgį
+
+    private enum BossState { Idle, Chasing, Dashing, Shockwave, ConeAttack, Stunned, Dead }
     private BossState currentState = BossState.Idle;
 
     private Transform player;
     private Rigidbody2D rb;
     private Animator animator;
     private EnemyKnockback knockbackComponent;
+    private SpriteRenderer spriteRenderer;
 
     private bool isDead = false;
     private float cooldownTimer;
@@ -34,6 +41,7 @@ public class BOSS_AI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         knockbackComponent = GetComponent<EnemyKnockback>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
@@ -49,51 +57,49 @@ public class BOSS_AI : MonoBehaviour
         float dist = Vector2.Distance(transform.position, player.position);
         cooldownTimer -= Time.deltaTime;
 
+        // Bosas stovi vietoje, bet visada žiūri į žaidėją (išskyrus kai jau atakuoja)
+        if (currentState == BossState.Idle || currentState == BossState.Chasing)
+        {
+            Vector2 directionToPlayer = ((Vector2)player.position - (Vector2)transform.position).normalized;
+            FlipSprite(directionToPlayer.x);
+        }
+
         LogicUpdate(dist);
     }
 
     private void LogicUpdate(float dist)
     {
-        switch (currentState)
+        if (currentState == BossState.Chasing && cooldownTimer <= 0)
         {
-            case BossState.Idle:
-                if (dist < chaseRange) currentState = BossState.Chasing;
-                break;
+            // Sugeneruojam atsitiktinį skaičių nuo 0 iki 3, kad parinktume vieną iš trijų atakų
+            int attackChoice = Random.Range(0, 3);
 
-            case BossState.Chasing:
-                if (dist <= attackRange && cooldownTimer <= 0)
-                {
-                    if (Random.value > 0.7f) StartCoroutine(DashAttack());
-                    else StartCoroutine(MeleeAttack());
-                }
-                break;
+            if (attackChoice == 0)
+            {
+                StartCoroutine(DashAttack());
+            }
+            else if (attackChoice == 1)
+            {
+                StartCoroutine(ShockwaveAttack());
+            }
+            else
+            {
+                StartCoroutine(ConeAttack());
+            }
+        }
+
+        if (currentState == BossState.Idle && dist < chaseRange)
+        {
+            currentState = BossState.Chasing;
         }
     }
 
     void FixedUpdate()
     {
-        if (player == null || isDead || currentState != BossState.Chasing)
+        if (currentState != BossState.Dashing)
         {
-            if (currentState != BossState.Dashing) rb.linearVelocity = Vector2.zero;
-            return;
+            rb.linearVelocity = Vector2.zero;
         }
-
-        Vector2 dir = ((Vector2)player.position - (Vector2)transform.position).normalized;
-        rb.linearVelocity = dir * (isPhaseTwo ? moveSpeed * 1.5f : moveSpeed);
-
-        FlipSprite(dir.x);
-    }
-
-    IEnumerator MeleeAttack()
-    {
-        currentState = BossState.Attacking;
-        rb.linearVelocity = Vector2.zero;
-
-        Debug.Log("Bossas puola artimoje kovoje!");
-        yield return new WaitForSeconds(0.5f);
-
-        cooldownTimer = attackCooldown;
-        if (!isDead) currentState = BossState.Chasing;
     }
 
     IEnumerator DashAttack()
@@ -102,16 +108,92 @@ public class BOSS_AI : MonoBehaviour
         Vector2 dashDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
 
         rb.linearVelocity = Vector2.zero;
+
+        if (spriteRenderer != null) spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.4f);
 
-        rb.linearVelocity = dashDir * dashSpeed;
+        if (spriteRenderer != null) spriteRenderer.color = Color.white;
+
+        float currentDashSpeed = isPhaseTwo ? dashSpeed * 1.5f : dashSpeed;
+        rb.linearVelocity = dashDir * currentDashSpeed;
         yield return new WaitForSeconds(0.3f);
 
         rb.linearVelocity = Vector2.zero;
         currentState = BossState.Stunned;
         yield return new WaitForSeconds(1f);
 
-        cooldownTimer = attackCooldown;
+        ResetAfterAttack();
+    }
+
+    IEnumerator ShockwaveAttack()
+    {
+        currentState = BossState.Shockwave;
+        rb.linearVelocity = Vector2.zero;
+
+        if (animator != null) animator.SetTrigger("RaiseHands");
+        if (spriteRenderer != null) spriteRenderer.color = new Color(1f, 0.6f, 0f); // Oranžinė
+
+        yield return new WaitForSeconds(shockwaveChargeTime);
+
+        if (animator != null) animator.SetTrigger("Slam");
+        if (spriteRenderer != null) spriteRenderer.color = Color.white;
+
+        if (shockwavePrefab != null)
+        {
+            GameObject wave = Instantiate(shockwavePrefab, transform.position, Quaternion.identity);
+            if (isPhaseTwo) wave.transform.localScale *= 1.5f;
+        }
+
+        currentState = BossState.Stunned;
+        yield return new WaitForSeconds(0.8f);
+
+        ResetAfterAttack();
+    }
+
+    // --- NAUJA ATAKA: Sutrenkia rankomis ir paleidžia kūgį link žaidėjo ---
+    IEnumerator ConeAttack()
+    {
+        currentState = BossState.ConeAttack;
+        rb.linearVelocity = Vector2.zero;
+
+        if (animator != null) animator.SetTrigger("ClapHands"); // Triggeris animacijai (jei turi)
+        if (spriteRenderer != null) spriteRenderer.color = new Color(0f, 0.5f, 1f); // Nusidažo mėlynai prieš smūgį
+
+        yield return new WaitForSeconds(coneChargeTime);
+
+        if (spriteRenderer != null) spriteRenderer.color = Color.white;
+
+        if (conePrefab != null)
+        {
+            // Apskaičiuojam kryptį ir kampą link žaidėjo
+            Vector2 dirToPlayer = ((Vector2)player.position - (Vector2)transform.position).normalized;
+            float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
+
+            // Sukuriam kūgį pasuktą tiesiai į žaidėją
+            Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
+            GameObject cone = Instantiate(conePrefab, transform.position, spawnRotation);
+
+            // Antroje fazėje kūgio formos ataka gali būti šiek tiek didesnė
+            if (isPhaseTwo)
+            {
+                cone.transform.localScale *= 1.3f;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Cone Prefab nepriskirtas BOSS_AI skripte!");
+        }
+
+        currentState = BossState.Stunned;
+        yield return new WaitForSeconds(0.8f);
+
+        ResetAfterAttack();
+    }
+
+    private void ResetAfterAttack()
+    {
+        if (spriteRenderer != null) spriteRenderer.color = Color.white;
+        cooldownTimer = isPhaseTwo ? attackCooldown * 0.8f : attackCooldown;
         if (!isDead) currentState = BossState.Chasing;
     }
 
@@ -132,17 +214,12 @@ public class BOSS_AI : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;
 
-        // Paslepiam boso vizualus ir išjungiam jo susidūrimus
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (sr != null) sr.enabled = false;
+        if (spriteRenderer != null) spriteRenderer.enabled = false;
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
 
-        // Sustabdom žaidėją
         DisablePlayerControl();
-
-        // Paleidžiame iškart pergalės langą
         StartCoroutine(ShowVictoryAfterDelay(0f));
     }
 
@@ -150,19 +227,15 @@ public class BOSS_AI : MonoBehaviour
     {
         if (player != null)
         {
-            // 1. Išjungiam pagrindinį judėjimą
             PlayerMovement movement = player.GetComponent<PlayerMovement>();
             if (movement != null) movement.enabled = false;
 
-            // 2. Išjungiam Brūkšnį (Dash)
             PlayerDash dash = player.GetComponent<PlayerDash>();
             if (dash != null) dash.enabled = false;
 
-            // 3. Išjungiam Ataką
             PlayerAttack attack = player.GetComponent<PlayerAttack>();
             if (attack != null) attack.enabled = false;
 
-            // 4. Sustabdom žaidėjo fiziką
             Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
             if (playerRb != null)
             {
@@ -170,8 +243,7 @@ public class BOSS_AI : MonoBehaviour
                 playerRb.bodyType = RigidbodyType2D.Kinematic;
             }
 
-            Cursor.visible = true; // Padaro pelę matomą
-
+            Cursor.visible = true;
             Debug.Log("Žaidėjo kontrolė išjungta, pelės žymeklis įjungtas!");
         }
     }
@@ -183,11 +255,10 @@ public class BOSS_AI : MonoBehaviour
         if (victoryPanel != null)
         {
             victoryPanel.SetActive(true);
-            Debug.Log("VictoryPanel sėkmingai parodytas per ObjectGenerator!");
         }
         else
         {
-            Debug.LogError("BOSS_AI negavo VictoryPanel nuorodos iš ObjectGenerator!");
+            Debug.LogError("BOSS_AI negavo VictoryPanel nuorodos!");
         }
 
         Destroy(gameObject);
@@ -196,10 +267,7 @@ public class BOSS_AI : MonoBehaviour
     void StartPhaseTwo()
     {
         isPhaseTwo = true;
-        moveSpeed *= 1.2f;
-        attackCooldown *= 0.8f;
-        GetComponent<SpriteRenderer>().color = Color.red;
-        Debug.Log("BOSS ENRAGED!");
+        Debug.Log("BOSS ENRAGED! Antra fazė – atakos dažnesnės ir stipresnės!");
     }
 
     private void FlipSprite(float x)
