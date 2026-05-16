@@ -6,7 +6,7 @@ public class BOSS_AI : MonoBehaviour
     [Header("Boso nustatymai")]
     public float maxHealth = 100f;
     private float currentHealth;
-    public float phaseTwoThreshold = 0.5f; // Pereina į 2 fazę ties 50% HP
+    public float phaseTwoThreshold = 0.5f;
 
     [Header("Judėjimas")]
     public float moveSpeed = 2.5f;
@@ -17,9 +17,9 @@ public class BOSS_AI : MonoBehaviour
     [Header("Atakos")]
     public float attackCooldown = 2f;
     public int projectilesInPhaseTwo = 5;
-    public GameObject projectilePrefab; // Galima naudoti pickaxe arba specialų boso sviedinį
+    public GameObject projectilePrefab;
 
-    private enum BossState { Idle, Chasing, Attacking, Dashing, Stunned }
+    private enum BossState { Idle, Chasing, Attacking, Dashing, Stunned, Dead }
     private BossState currentState = BossState.Idle;
 
     private Transform player;
@@ -27,6 +27,7 @@ public class BOSS_AI : MonoBehaviour
     private Animator animator;
     private EnemyKnockback knockbackComponent;
 
+    private bool isDead = false;
     private float cooldownTimer;
     private bool isPhaseTwo = false;
 
@@ -43,9 +44,8 @@ public class BOSS_AI : MonoBehaviour
 
     void Update()
     {
-        if (player == null) return;
+        if (player == null || isDead) return;
 
-        // Knockback patikra (perimta iš tavo pavyzdžio)
         if (knockbackComponent != null && knockbackComponent.IsBeingKnockedBack)
             return;
 
@@ -66,7 +66,6 @@ public class BOSS_AI : MonoBehaviour
             case BossState.Chasing:
                 if (dist <= attackRange && cooldownTimer <= 0)
                 {
-                    // Atsitiktinai renkasi tarp paprastos atakos ir Dash
                     if (Random.value > 0.7f) StartCoroutine(DashAttack());
                     else StartCoroutine(MeleeAttack());
                 }
@@ -76,7 +75,7 @@ public class BOSS_AI : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (player == null || currentState != BossState.Chasing)
+        if (player == null || isDead || currentState != BossState.Chasing)
         {
             if (currentState != BossState.Dashing) rb.linearVelocity = Vector2.zero;
             return;
@@ -88,22 +87,18 @@ public class BOSS_AI : MonoBehaviour
         FlipSprite(dir.x);
     }
 
-    // --- ATAKŲ LOGIKA ---
-
     IEnumerator MeleeAttack()
     {
         currentState = BossState.Attacking;
         rb.linearVelocity = Vector2.zero;
 
-        // Čia grotum animaciją: animator.SetTrigger("Attack");
         Debug.Log("Bossas puola artimoje kovoje!");
+        yield return new WaitForSeconds(0.5f);
 
-        yield return new WaitForSeconds(0.5f); // Atakos animacijos laikas
-
-        if (isPhaseTwo) ShootProjectiles(); // Antroje fazėje po atakos dar iššauna
+        if (isPhaseTwo) ShootProjectiles();
 
         cooldownTimer = attackCooldown;
-        currentState = BossState.Chasing;
+        if (!isDead) currentState = BossState.Chasing;
     }
 
     IEnumerator DashAttack()
@@ -111,20 +106,18 @@ public class BOSS_AI : MonoBehaviour
         currentState = BossState.Dashing;
         Vector2 dashDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
 
-        // Trumpas pasiruošimas (Anticipation)
         rb.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(0.4f);
 
-        // Pats Dashas
         rb.linearVelocity = dashDir * dashSpeed;
         yield return new WaitForSeconds(0.3f);
 
         rb.linearVelocity = Vector2.zero;
-        currentState = BossState.Stunned; // Po dasho bossas trumpam sustingsta
+        currentState = BossState.Stunned;
         yield return new WaitForSeconds(1f);
 
         cooldownTimer = attackCooldown;
-        currentState = BossState.Chasing;
+        if (!isDead) currentState = BossState.Chasing;
     }
 
     void ShootProjectiles()
@@ -137,15 +130,48 @@ public class BOSS_AI : MonoBehaviour
         }
     }
 
-    // --- PAGALBINĖS FUNKCIJOS ---
-
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
+
         currentHealth -= damage;
+
         if (!isPhaseTwo && currentHealth <= maxHealth * phaseTwoThreshold)
-        {
             StartPhaseTwo();
+
+        if (currentHealth <= 0)
+            Die();
+    }
+
+    public void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+        currentState = BossState.Dead;
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        StartCoroutine(ShowVictoryAfterDelay(1.2f));
+    }
+
+    IEnumerator ShowVictoryAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Ieško ir išjungtų objektų per Canvas
+        Canvas canvas = FindFirstObjectByType<Canvas>();
+        Transform panel = canvas.transform.Find("VictoryPanel");
+
+        if (panel != null)
+        {
+            panel.gameObject.SetActive(true);
+            Debug.Log("VictoryPanel parodytas!");
         }
+        else
+        {
+            Debug.LogError("VictoryPanel nerastas Canvas viduje!");
+        }
+
+        Destroy(gameObject, 0.5f);
     }
 
     void StartPhaseTwo()
@@ -153,7 +179,6 @@ public class BOSS_AI : MonoBehaviour
         isPhaseTwo = true;
         moveSpeed *= 1.2f;
         attackCooldown *= 0.8f;
-        // Galima pakeisti spalvą ar groti pykčio animaciją
         GetComponent<SpriteRenderer>().color = Color.red;
         Debug.Log("BOSS ENRAGED!");
     }
@@ -162,7 +187,6 @@ public class BOSS_AI : MonoBehaviour
     {
         if (Mathf.Abs(x) > 0.1f)
         {
-            // Vietoj 1 naudojame 3.5f, kad išlaikytume boso dydį
             float currentScale = 3.5f;
             transform.localScale = new Vector3(x < 0 ? currentScale : -currentScale, currentScale, currentScale);
         }

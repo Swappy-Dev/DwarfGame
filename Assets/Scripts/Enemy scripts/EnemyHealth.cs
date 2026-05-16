@@ -29,7 +29,6 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         Debug.Log(gameObject.name + " mirė!");
-
         if (deathEffect != null)
         {
             Instantiate(deathEffect, transform.position, Quaternion.identity);
@@ -39,6 +38,14 @@ public class EnemyHealth : MonoBehaviour
         if (moleAI != null && moleAI.activePickaxe != null)
         {
             Destroy(moleAI.activePickaxe);
+        }
+
+        // ✅ NAUJAS: jei tai bossas — iškviečiam jo mirties logiką
+        BOSS_AI bossAI = GetComponent<BOSS_AI>();
+        if (bossAI != null)
+        {
+            bossAI.Die(); // Victory Panel iškviečiamas čia
+            return;       // Destroy paliekam BOSS_AI viduje
         }
 
         Destroy(gameObject);
