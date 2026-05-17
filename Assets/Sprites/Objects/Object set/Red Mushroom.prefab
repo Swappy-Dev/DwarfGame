@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 6683659898415042806}
   - component: {fileID: -701879282521496002}
   - component: {fileID: -6028384979399887127}
+  - component: {fileID: 1516265701963775842}
   m_Layer: 7
   m_Name: Red Mushroom
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -199,3 +200,16 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &1516265701963775842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249450858155366585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a017d52b0805743a29191bdb3fafca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  inventoryUIItemPrefab: {fileID: 8457265300319108989, guid: f5b89e52ea26af1468c9ebf026225aa1, type: 3}

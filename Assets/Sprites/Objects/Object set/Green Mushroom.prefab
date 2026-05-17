@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 3112703162679140939}
   - component: {fileID: 8079899397381477144}
   - component: {fileID: -9039559379858903557}
+  - component: {fileID: 4908747075266650596}
   m_Layer: 7
   m_Name: Green Mushroom
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -199,3 +200,16 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &4908747075266650596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5561476952532559513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a017d52b0805743a29191bdb3fafca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  inventoryUIItemPrefab: {fileID: 8457265300319108989, guid: 01ed00235d283f344b934036b419cb4f, type: 3}

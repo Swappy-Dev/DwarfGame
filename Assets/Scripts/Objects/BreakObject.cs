@@ -18,18 +18,21 @@ public class BreakObject : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Collider2D objectCollider;
     private Light2D light2D;
-    private Animator animator; // Added animator reference
+    private Animator animator;
     private Vector3 originalPosition;
     private int currentHits = 0;
     private bool isBroken = false;
+    private InventoryController inventoryController;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         objectCollider = GetComponent<Collider2D>();
-        animator = GetComponent<Animator>(); // Initialize animator
+        animator = GetComponent<Animator>();
         originalPosition = transform.position;
         light2D = GetComponent<Light2D>();
+
+        inventoryController = FindAnyObjectByType<InventoryController>();
 
         if (objectCollider != null && !objectCollider.isTrigger)
         {
@@ -48,9 +51,6 @@ public class BreakObject : MonoBehaviour
         }
         else
         {
-            // Optional: If you have a "Hit" animation, trigger it here
-            // if (animator != null) animator.SetTrigger("Hit"); 
-
             SoundManager.Instance.Play("PickaxeHit");
             StartCoroutine(Shake());
         }
@@ -60,35 +60,63 @@ public class BreakObject : MonoBehaviour
     {
         if (breakOnStep && !isBroken && collision.CompareTag("Player"))
         {
-            Debug.Log("Žaidėjas užlipo ant " + gameObject.name);
             ExecuteBreak();
         }
     }
 
-    private void ExecuteBreak()
+    public void ExecuteBreak()
     {
+        if (isBroken) return;
+
+        Item itemScript = GetComponent<Item>();
+        if (itemScript != null)
+        {
+            if (inventoryController != null)
+            {
+                // Bandome įdėti į inventorių
+                bool itemAdded = inventoryController.AddItem(gameObject);
+
+                // Jei vietos nėra, neleidžiame sulūžti
+                if (!itemAdded)
+                {
+                    Debug.Log("Inventorius pilnas, daiktas nesulūžta.");
+                    return;
+                }
+            }
+        }
+
+        // Ši dalis suveikia tik jei daiktas sėkmingai įdėtas ARBA objektas neturi Item skripto (pvz. siena)
         isBroken = true;
         StopAllCoroutines();
         transform.position = originalPosition;
         SoundManager.Instance.Play("PickaxeBreak");
 
-        // CRITICAL: Disable the animator so it stops playing the loop
-        // and stops overriding the SpriteRenderer.
         if (animator != null)
         {
             animator.enabled = false;
         }
 
         if (brokenSprite != null)
+        {
             spriteRenderer.sprite = brokenSprite;
+        }
 
+        // IŠJUNGIAME COLLIDERIUS – objektas lieka matomas, bet su juo nebeįmanoma sąveikauti
         Collider2D[] allColliders = GetComponents<Collider2D>();
         foreach (Collider2D col in allColliders)
         {
             col.enabled = false;
         }
 
+        // Išjungiame Item skriptą, kad daiktas būtų laikomas „paimtu“
+        if (itemScript != null)
+        {
+            itemScript.enabled = false;
+        }
+
         OnBreak();
+
+        // !!! KODAS SĄMONINGAI NEBETURI Destroy() – SULŪŽĘS SPRITE LIEKA ŽEMĖLAPYJE !!!
     }
 
     private IEnumerator Shake()
