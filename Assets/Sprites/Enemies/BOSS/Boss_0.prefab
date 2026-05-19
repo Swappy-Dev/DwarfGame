@@ -248,6 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7386b6d6c56aa8e43a3e11b1bef68f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  lightPrefab: {fileID: 2055883172784504481, guid: cead726a46c092841b7f7ca5929dc003, type: 3}
+  lightCount: 6
+  spawnRadius: 6
   phaseTwoThreshold: 0.5
   dashSpeed: 15
   chaseRange: 12

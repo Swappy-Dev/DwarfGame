@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     public float attackRate = 2f;
     public float knockbackStrength = 7f;
     private float nextAttackTime = 0f;
+    public float damageMultiplier = 1f;
 
     [Header("Enemy Targeting")]
     public LayerMask enemyLayers;
@@ -71,7 +72,12 @@ public class PlayerAttack : MonoBehaviour
 
             EnemyHealth enemyHealth = collider.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
-                enemyHealth.TakeDamage(attackDamage);
+            {
+                
+                int finalDamage = Mathf.RoundToInt(attackDamage  * damageMultiplier);
+
+                enemyHealth.TakeDamage(finalDamage);
+            }
 
             EnemyKnockback knockback = collider.GetComponent<EnemyKnockback>();
             if (knockback != null)

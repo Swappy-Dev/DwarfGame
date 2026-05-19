@@ -1,9 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 public class PlayerData : MonoBehaviour
 {
     public static event Action OnPlayerDamaged;
     public static event Action OnPlayerDeath;
+    public static event Action OnPlayerHealed;
     public int maxHealth = 10;
     public int currentHealth;
     public float invincibilityTime = 0.8f;
@@ -19,6 +20,7 @@ public class PlayerData : MonoBehaviour
     {
         OnPlayerDamaged = null;
         OnPlayerDeath = null;
+        OnPlayerHealed = null;
     }
     public void SetInvincibility(float duration)
     {
@@ -35,6 +37,7 @@ public class PlayerData : MonoBehaviour
     {
         OnPlayerDamaged = null;
         OnPlayerDeath = null;
+        OnPlayerHealed = null;
     }
     public void TakeDamage(int damage)
     {
@@ -56,5 +59,20 @@ public class PlayerData : MonoBehaviour
             OnPlayerDeath?.Invoke();
             GetComponent<PlayerDeathHandler>()?.HandleDeath();
         }
+    }
+    public void Heal(int amount)
+    {
+        if (currentHealth >= maxHealth) return;
+
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        Debug.Log("Player healed for " + amount + ". Current health: " + currentHealth);
+
+        // Pranešame širdelėms, kad laikas persipiešti!
+        OnPlayerHealed?.Invoke();
     }
 }

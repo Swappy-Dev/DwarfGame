@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6797092529998374914}
   - component: {fileID: 8096556842788607841}
   - component: {fileID: 7564854677823108506}
+  - component: {fileID: -3944241330540079328}
   m_Layer: 5
   m_Name: Blue UI
   m_TagString: Untagged
@@ -101,3 +102,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d209c04bab3104f4ba0cb191c8d5bf46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDragHandler
+--- !u!114 &-3944241330540079328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8457265300319108989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 520c11ddf9bb0d44a92f2b98c6d8308b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeedMushroom
+  inventoryUIItemPrefab: {fileID: 8457265300319108989}
+  duration: 10
+  multiplier: 1.5

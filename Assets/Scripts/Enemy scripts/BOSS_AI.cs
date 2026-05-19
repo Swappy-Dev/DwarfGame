@@ -3,6 +3,11 @@ using System.Collections;
 
 public class BOSS_AI : MonoBehaviour
 {
+    [Header("Šviesų generavimo nustatymai")]
+    public GameObject lightPrefab;       
+    public int lightCount = 4;           
+    public float spawnRadius = 3f;
+
     [Header("Boso nustatymai")]
     public float phaseTwoThreshold = 0.5f;
 
@@ -45,6 +50,35 @@ public class BOSS_AI : MonoBehaviour
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
+
+        SpawnLightsAroundBoss();
+    }
+
+
+    private void SpawnLightsAroundBoss()
+    {
+        if (lightPrefab == null)
+        {
+            Debug.LogWarning("Light Prefab nepriskirtas BOSS_AI skripte! Šviesos nesugeneruotos.");
+            return;
+        }
+
+        for (int i = 0; i < lightCount; i++)
+        {
+            // Apskaičiuojame kampą kiekvienam objektui, kad jie išsidėstytų tolygiai ratu
+            float angle = i * Mathf.PI * 2f / lightCount;
+
+            // Sužinome x ir y pozicijas aplink bosą pagal spindulį
+            float x = Mathf.Cos(angle) * spawnRadius;
+            float y = Mathf.Sin(angle) * spawnRadius;
+
+            Vector3 spawnPosition = transform.position + new Vector3(x, y, 0f);
+
+            // Sukuriame šviesos objektą
+            GameObject spawnedLight = Instantiate(lightPrefab, spawnPosition, Quaternion.identity);
+
+            
+        }
     }
 
     void Update()

@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float knockbackTimer = 0f;
     public bool isDead = false;
     private PlayerDash playerDash;
+    public float speedMultiplier = 1f;
 
     private bool hasPickaxe = false;
     public bool HasPickaxe => hasPickaxe;
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float footstepTimer = 0f;
     public float footstepInterval = 0.35f;
+
 
     private void Awake()
     {
@@ -125,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Full movement allowed even during attack
-        Vector2 movement = movementInput.normalized * moveSpeed * Time.fixedDeltaTime;
+        Vector2 movement = movementInput.normalized * (moveSpeed * speedMultiplier) * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
 
         if (movementInput != Vector2.zero)

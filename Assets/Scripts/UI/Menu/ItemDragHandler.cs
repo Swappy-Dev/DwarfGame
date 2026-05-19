@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem; // BŪTINA naujajai Input sistemai
 
-public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+// Pridėjome IPointerClickHandler paprastiems paspaudimams gaudyti
+public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     private Transform originalParent;
     private CanvasGroup canvasGroup;
@@ -12,19 +14,70 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {
-            // Jei pamiršai uždėti, kodas uždeda pats, kad nebūtų klaidų
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
 
-        // Surandame pagrindinį Canvas, kad daiktas vilkimo metu būtų viršuje
         mainCanvas = GetComponentInParent<Canvas>();
     }
 
+    // --- NAUJA FUNKCIJA: Greitasis perkėlimas su Shift + Click ---
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // Tikriname, ar paspaustas KAIRYSIS pelės klavišas
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            // Tikriname, ar šiuo metu laikomas nuspaustas bet kuris SHIFT klavišas
+            if (Keyboard.current != null && Keyboard.current.shiftKey.isPressed)
+            {
+                TryFastTransfer();
+            }
+        }
+    }
+
+    private void TryFastTransfer()
+    {
+        Slot currentSlot = transform.parent.GetComponent<Slot>();
+        if (currentSlot == null) return;
+
+        // Surandame abu valdiklius žaidime
+        InventoryController inventory = FindAnyObjectByType<InventoryController>();
+        HotbarController hotbar = FindAnyObjectByType<HotbarController>();
+
+        if (inventory == null || hotbar == null) return;
+
+        // Tikriname, kur šiuo metu esame, ir ieškome tikslo panelės
+        bool isInHotbar = currentSlot.transform.IsChildOf(hotbar.hotbarPanel.transform);
+        Transform targetPanel = isInHotbar ? inventory.inventoryPanel.transform : hotbar.hotbarPanel.transform;
+
+        // Surandame visus tikslo panelės langelius (ieškome ir neaktyvių)
+        Slot[] targetSlots = targetPanel.GetComponentsInChildren<Slot>(true);
+
+        foreach (Slot slot in targetSlots)
+        {
+            // Ieškome pirmo laisvo langelio tikslo panelėje
+            if (slot.currentItem == null)
+            {
+                // Atjungiame daiktą iš seno langelio
+                currentSlot.currentItem = null;
+
+                // Prisegame prie naujo langelio
+                transform.SetParent(slot.transform);
+                GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                slot.currentItem = gameObject;
+
+                Debug.Log($"Daiktas greituoju būdu perkeltas į: {slot.gameObject.name}");
+                return; // Darbas baigtas, nutraukiame ciklą
+            }
+        }
+
+        Debug.Log("Perkėlimas nepavyko: tikslo vietoje nėra laisvų langelių!");
+    }
+
+    // --- TAVO SENEJI DRAG / DROP METODAI (LIKO NEPAKEISTI) ---
     public void OnBeginDrag(PointerEventData eventData)
     {
         originalParent = transform.parent;
 
-        // Perkeliam į Canvas viršų, kad vilkimas matytųsi virš visų langelių
         if (mainCanvas != null)
             transform.SetParent(mainCanvas.transform);
 
@@ -44,7 +97,6 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         Slot dropSlot = null;
 
-        // Tikriname, ką pelė užkabino atleidimo metu
         if (eventData.pointerEnter != null)
         {
             dropSlot = eventData.pointerEnter.GetComponent<Slot>();
@@ -58,36 +110,29 @@ public class ItemDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         if (dropSlot != null)
         {
-            // Jei numetėme į tą patį slotą, iš kurio paėmėme
             if (dropSlot == originalSlot)
             {
                 ReturnToOriginal();
                 return;
             }
 
-            // Jei naujas slotas jau turi kitą daiktą – sukeičiame vietomis
             if (dropSlot.currentItem != null)
             {
                 GameObject swappedItem = dropSlot.currentItem;
-
                 swappedItem.transform.SetParent(originalParent);
                 swappedItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-
                 originalSlot.currentItem = swappedItem;
             }
             else
             {
-                // Jei naujas slotas buvo tuščias, senąjį išvalome
                 originalSlot.currentItem = null;
             }
 
-            // Įdedame daiktą į naują slotą
             transform.SetParent(dropSlot.transform);
             dropSlot.currentItem = gameObject;
         }
         else
         {
-            // Jei numetėme pro šalį – grąžiname
             ReturnToOriginal();
         }
 

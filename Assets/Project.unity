@@ -62658,6 +62658,7 @@ MonoBehaviour:
   animator: {fileID: 1563114540}
   knockbackTimer: 0
   isDead: 0
+  speedMultiplier: 1
   footstepInterval: 0.5
 --- !u!114 &1563114538
 MonoBehaviour:
@@ -62796,6 +62797,7 @@ MonoBehaviour:
   attackDamage: 2
   attackRate: 2
   knockbackStrength: 7
+  damageMultiplier: 1
   enemyLayers:
     serializedVersion: 2
     m_Bits: 128
