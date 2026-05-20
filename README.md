@@ -63,9 +63,9 @@ Projektas sėkmingai išvystytas per **5 pilnus sprintus**, taikant Agile metodo
 ---
 
 ## ⚡ 5. Kaip paleisti žaidimą
-1. Atsisiųskite žaidimo aplanką.
-2. Išpakuokite failus.
-3. Paleiskite vykdomąjį failą: `Dwarven Caves.exe`.
+1. Atsisiųskite naujausią žaidimo versiją iš [👉 GitHub Releases puslapio](https://github.com/tavo_username/tavo_repo/releases).
+2. Išpakuokite atsisiųstą `.zip` archyvą.
+3. Atsidarykite išpakuotą aplanką ir paleiskite: `Dwarven Caves.exe`.
 
 ---
 
