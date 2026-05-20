@@ -4,8 +4,8 @@ using System.Collections;
 public class BOSS_AI : MonoBehaviour
 {
     [Header("Šviesų generavimo nustatymai")]
-    public GameObject lightPrefab;       
-    public int lightCount = 4;           
+    public GameObject lightPrefab;
+    public int lightCount = 4;
     public float spawnRadius = 3f;
 
     [Header("Boso nustatymai")]
@@ -23,8 +23,8 @@ public class BOSS_AI : MonoBehaviour
     public float shockwaveChargeTime = 0.6f;
 
     [Header("Cone Atakos Nustatymai")]
-    public GameObject conePrefab; // Įtempk kūgio formos Prefab'ą Unity Inspektoriuje
-    public float coneChargeTime = 0.5f; // Kiek laiko ruošiasi prieš iššaunant kūgį
+    public GameObject conePrefab;
+    public float coneChargeTime = 0.5f;
 
     private enum BossState { Idle, Chasing, Dashing, Shockwave, ConeAttack, Stunned, Dead }
     private BossState currentState = BossState.Idle;
@@ -54,30 +54,21 @@ public class BOSS_AI : MonoBehaviour
         SpawnLightsAroundBoss();
     }
 
-
     private void SpawnLightsAroundBoss()
     {
         if (lightPrefab == null)
         {
-            Debug.LogWarning("Light Prefab nepriskirtas BOSS_AI skripte! Šviesos nesugeneruotos.");
+            Debug.LogWarning("Light Prefab nepriskirtas!");
             return;
         }
 
         for (int i = 0; i < lightCount; i++)
         {
-            // Apskaičiuojame kampą kiekvienam objektui, kad jie išsidėstytų tolygiai ratu
             float angle = i * Mathf.PI * 2f / lightCount;
-
-            // Sužinome x ir y pozicijas aplink bosą pagal spindulį
             float x = Mathf.Cos(angle) * spawnRadius;
             float y = Mathf.Sin(angle) * spawnRadius;
-
             Vector3 spawnPosition = transform.position + new Vector3(x, y, 0f);
-
-            // Sukuriame šviesos objektą
-            GameObject spawnedLight = Instantiate(lightPrefab, spawnPosition, Quaternion.identity);
-
-            
+            Instantiate(lightPrefab, spawnPosition, Quaternion.identity);
         }
     }
 
@@ -91,7 +82,6 @@ public class BOSS_AI : MonoBehaviour
         float dist = Vector2.Distance(transform.position, player.position);
         cooldownTimer -= Time.deltaTime;
 
-        // Bosas stovi vietoje, bet visada žiūri į žaidėją (išskyrus kai jau atakuoja)
         if (currentState == BossState.Idle || currentState == BossState.Chasing)
         {
             Vector2 directionToPlayer = ((Vector2)player.position - (Vector2)transform.position).normalized;
@@ -105,35 +95,24 @@ public class BOSS_AI : MonoBehaviour
     {
         if (currentState == BossState.Chasing && cooldownTimer <= 0)
         {
-            // Sugeneruojam atsitiktinį skaičių nuo 0 iki 3, kad parinktume vieną iš trijų atakų
             int attackChoice = Random.Range(0, 3);
 
             if (attackChoice == 0)
-            {
                 StartCoroutine(DashAttack());
-            }
             else if (attackChoice == 1)
-            {
                 StartCoroutine(ShockwaveAttack());
-            }
             else
-            {
                 StartCoroutine(ConeAttack());
-            }
         }
 
         if (currentState == BossState.Idle && dist < chaseRange)
-        {
             currentState = BossState.Chasing;
-        }
     }
 
     void FixedUpdate()
     {
         if (currentState != BossState.Dashing)
-        {
             rb.linearVelocity = Vector2.zero;
-        }
     }
 
     IEnumerator DashAttack()
@@ -143,6 +122,8 @@ public class BOSS_AI : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
 
+        // ✅ Dash trigger
+        if (animator != null) animator.SetTrigger("Dash");
         if (spriteRenderer != null) spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.4f);
 
@@ -164,12 +145,12 @@ public class BOSS_AI : MonoBehaviour
         currentState = BossState.Shockwave;
         rb.linearVelocity = Vector2.zero;
 
-        if (animator != null) animator.SetTrigger("RaiseHands");
-        if (spriteRenderer != null) spriteRenderer.color = new Color(1f, 0.6f, 0f); // Oranžinė
+        // ✅ Pound trigger (charge fazė)
+        if (animator != null) animator.SetTrigger("Pound");
+        if (spriteRenderer != null) spriteRenderer.color = new Color(1f, 0.6f, 0f);
 
         yield return new WaitForSeconds(shockwaveChargeTime);
 
-        if (animator != null) animator.SetTrigger("Slam");
         if (spriteRenderer != null) spriteRenderer.color = Color.white;
 
         if (shockwavePrefab != null)
@@ -184,14 +165,14 @@ public class BOSS_AI : MonoBehaviour
         ResetAfterAttack();
     }
 
-    // --- NAUJA ATAKA: Sutrenkia rankomis ir paleidžia kūgį link žaidėjo ---
     IEnumerator ConeAttack()
     {
         currentState = BossState.ConeAttack;
         rb.linearVelocity = Vector2.zero;
 
-        if (animator != null) animator.SetTrigger("ClapHands"); // Triggeris animacijai (jei turi)
-        if (spriteRenderer != null) spriteRenderer.color = new Color(0f, 0.5f, 1f); // Nusidažo mėlynai prieš smūgį
+        // ✅ Slam trigger
+        if (animator != null) animator.SetTrigger("Slam");
+        if (spriteRenderer != null) spriteRenderer.color = new Color(0f, 0.5f, 1f);
 
         yield return new WaitForSeconds(coneChargeTime);
 
@@ -199,23 +180,16 @@ public class BOSS_AI : MonoBehaviour
 
         if (conePrefab != null)
         {
-            // Apskaičiuojam kryptį ir kampą link žaidėjo
             Vector2 dirToPlayer = ((Vector2)player.position - (Vector2)transform.position).normalized;
             float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
-
-            // Sukuriam kūgį pasuktą tiesiai į žaidėją
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
             GameObject cone = Instantiate(conePrefab, transform.position, spawnRotation);
 
-            // Antroje fazėje kūgio formos ataka gali būti šiek tiek didesnė
-            if (isPhaseTwo)
-            {
-                cone.transform.localScale *= 1.3f;
-            }
+            if (isPhaseTwo) cone.transform.localScale *= 1.3f;
         }
         else
         {
-            Debug.LogWarning("Cone Prefab nepriskirtas BOSS_AI skripte!");
+            Debug.LogWarning("Cone Prefab nepriskirtas!");
         }
 
         currentState = BossState.Stunned;
@@ -234,9 +208,7 @@ public class BOSS_AI : MonoBehaviour
     public void CheckPhaseTransition(float currentHealth, float maxHealth)
     {
         if (!isPhaseTwo && currentHealth <= maxHealth * phaseTwoThreshold)
-        {
             StartPhaseTwo();
-        }
     }
 
     public void Die()
@@ -278,7 +250,6 @@ public class BOSS_AI : MonoBehaviour
             }
 
             Cursor.visible = true;
-            Debug.Log("Žaidėjo kontrolė išjungta, pelės žymeklis įjungtas!");
         }
     }
 
@@ -287,13 +258,9 @@ public class BOSS_AI : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         if (victoryPanel != null)
-        {
             victoryPanel.SetActive(true);
-        }
         else
-        {
-            Debug.LogError("BOSS_AI negavo VictoryPanel nuorodos!");
-        }
+            Debug.LogError("VictoryPanel nepriskirtas!");
 
         Destroy(gameObject);
     }
@@ -301,7 +268,7 @@ public class BOSS_AI : MonoBehaviour
     void StartPhaseTwo()
     {
         isPhaseTwo = true;
-        Debug.Log("BOSS ENRAGED! Antra fazė – atakos dažnesnės ir stipresnės!");
+        Debug.Log("BOSS ENRAGED! Antra fazė!");
     }
 
     private void FlipSprite(float x)

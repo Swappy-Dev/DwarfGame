@@ -64155,7 +64155,7 @@ MonoBehaviour:
     placeInRoomsOnly: 1
     isEnemy: 0
   bossData:
-    prefab: {fileID: 5488786567494760561, guid: 0db6b9df09ca9e54c80b26c539a6c686, type: 3}
+    prefab: {fileID: 1424518613211635242, guid: e6ed9df3e9e91bc4cb99e4c9129f296d, type: 3}
     placementProbability: 1
     placeInRoomsOnly: 1
     isEnemy: 1
